@@ -130,12 +130,35 @@ export class MailingController extends BaseHttpController {
             const transporter = getTransporter();
             await transporter.verify();
 
+            // Handle base64 images in HTML
+            const attachments: any[] = [];
+            let processedHtml = html;
+            let imgCount = 0;
+
+            const base64Regex = /<img[^>]+src="data:(image\/[^;]+);base64,([^">]+)"[^>]*>/gi;
+            processedHtml = processedHtml.replace(base64Regex, (match: string, mimeType: string, base64Data: string) => {
+                imgCount++;
+                const cid = `image_${imgCount}_${Date.now()}@nettmobinfotech.fr`;
+                const filename = `image_${imgCount}.${mimeType.split('/')[1]}`;
+                const buffer = Buffer.from(base64Data, 'base64');
+                
+                attachments.push({
+                    filename,
+                    content: buffer,
+                    cid,
+                    contentType: mimeType
+                });
+
+                return match.replace(`data:${mimeType};base64,${base64Data}`, `cid:${cid}`);
+            });
+
             // Send to each recipient individually (BCC-style via multiple sends or BCC)
             const info = await transporter.sendMail({
                 from: `"NettmobInfotech" <${process.env.EMAIL_FROM}>`,
                 bcc: recipients.join(","),
                 subject,
-                html,
+                html: processedHtml,
+                attachments
             });
 
             return res.json({

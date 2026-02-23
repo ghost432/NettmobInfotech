@@ -380,7 +380,7 @@ export const Home = () => {
                                 {t('home.ai.badge')}
                             </div>
                             <h2 className="text-3xl lg:text-5xl font-bold font-['Outfit'] text-primary mb-6">
-                                {t('home.ai.title').split('IA')[0]}<span className="text-accent">IA</span>
+                                {t('home.ai.title').split(i18n.language === 'en' || i18n.language === 'de' ? 'AI' : 'IA')[0]}<span className="text-accent">{i18n.language === 'en' || i18n.language === 'de' ? 'AI' : 'IA'}</span>
                             </h2>
                             <p className="text-lg text-muted-foreground leading-relaxed mb-6">
                                 {t('home.ai.description')}

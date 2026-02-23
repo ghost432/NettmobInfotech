@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export const WelcomePopup = () => {
+    const { t } = useTranslation();
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
@@ -36,7 +38,7 @@ export const WelcomePopup = () => {
                 <button
                     onClick={handleClose}
                     className="absolute top-4 right-4 z-10 p-2 rounded-full bg-background/80 backdrop-blur-sm hover:bg-background transition-colors shadow-lg"
-                    aria-label="Fermer"
+                    aria-label={t('welcome.close')}
                 >
                     <X className="h-5 w-5" />
                 </button>
@@ -57,18 +59,18 @@ export const WelcomePopup = () => {
                         <div className="p-8 md:p-12 flex flex-col justify-center bg-card">
                             <div className="mb-6">
                                 <div className="inline-block px-3 py-1 mb-4 text-xs font-bold tracking-wider text-accent uppercase bg-accent/10 rounded-full">
-                                    Bienvenue
+                                    {t('welcome.badge')}
                                 </div>
                                 <h2 className="text-3xl font-bold font-['Outfit'] text-primary mb-4">
-                                    Bienvenue chez <span className="text-accent">NettmobInfotech</span>
+                                    {t('welcome.title')} <span className="text-accent">NettmobInfotech</span>
                                 </h2>
                                 <p className="text-muted-foreground leading-relaxed mb-6">
-                                    Votre partenaire de confiance en développement web, mobile et solutions digitales innovantes. Nous transformons vos idées en réalité avec expertise et passion.
+                                    {t('welcome.description')}
                                 </p>
                                 <div className="space-y-2 text-sm text-muted-foreground mb-8">
-                                    <p>✨ Solutions sur mesure</p>
-                                    <p>🚀 Technologies de pointe</p>
-                                    <p>💼 Accompagnement personnalisé</p>
+                                    <p>{t('welcome.item1')}</p>
+                                    <p>{t('welcome.item2')}</p>
+                                    <p>{t('welcome.item3')}</p>
                                 </div>
                             </div>
                             <Button
@@ -76,7 +78,7 @@ export const WelcomePopup = () => {
                                 size="lg"
                                 className="w-full rounded-xl px-8 h-14 text-lg shadow-premium hover:scale-105 transition-transform"
                             >
-                                Découvrir nos services
+                                {t('welcome.discover')}
                             </Button>
                         </div>
                     </div>

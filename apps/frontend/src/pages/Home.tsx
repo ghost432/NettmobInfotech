@@ -2,18 +2,26 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, Smartphone, Search, Monitor, PenTool, CheckCircle2, Cog, Star, ShieldCheck, Zap, FileText, Users, Clock, Trophy } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import api from "@/lib/api";
 import { usePageTitle } from "@/hooks/usePageTitle";
 import { WelcomePopup } from "@/components/common/WelcomePopup";
 import { SEO } from "@/components/common/SEO";
 import { AdBanner } from "@/components/common/AdBanner";
+import { getLocalizedPath } from "@/lib/i18nUtils";
 
 interface BlogPost {
     id: number;
     title: string;
     slug: string;
     content: string;
+    title_en?: string;
+    content_en?: string;
+    title_es?: string;
+    content_es?: string;
+    title_de?: string;
+    content_de?: string;
     imageUrl: string;
     category: string;
     author: string;
@@ -21,32 +29,41 @@ interface BlogPost {
 }
 
 const services = [
-    { title: "Marketing digital", description: "Nettmobinfotech offre une gamme complète de services marketing digital pour aider les entreprises à atteindre leurs objectifs commerciaux.", icon: <Search className="h-8 w-8 text-accent" /> },
-    { title: "Création de site Web", description: "Nous proposons un service de création de sites Web pour répondre aux besoins de toutes les entreprises, des petites startups aux grandes organisations.", icon: <Monitor className="h-8 w-8 text-accent" /> },
-    { title: "Développement mobile", description: "Création d'applications mobiles sur mesure pour les entreprises et les particuliers.", icon: <Smartphone className="h-8 w-8 text-accent" /> },
-    { title: "Design Graphique", description: "Identités visuelles modernes et percutantes pour votre marque.", icon: <PenTool className="h-8 w-8 text-accent" /> },
+    { title: "home.services.s1.title", description: "home.services.s1.desc", icon: <Search className="h-8 w-8 text-accent" /> },
+    { title: "home.services.s2.title", description: "home.services.s2.desc", icon: <Monitor className="h-8 w-8 text-accent" /> },
+    { title: "home.services.s3.title", description: "home.services.s3.desc", icon: <Smartphone className="h-8 w-8 text-accent" /> },
+    { title: "home.services.s4.title", description: "home.services.s4.desc", icon: <PenTool className="h-8 w-8 text-accent" /> },
 ];
 
 const testimonials = [
-    { author: "Thomas Martin", role: "Directeur Marketing", text: "Le suivi tout au long de la création de mon application a été exemplaire. L'équipe s'est impliquée à 100% pour un résultat parfait." },
-    { author: "Jacques Dupont", role: "Entrepreneur", text: "Travailler avec Nettmobinfotech pour ma boutique en ligne a été un pur plaisir. Gestion de stock impeccable et design au top." },
-    { author: "Stéphane Moreau", role: "CEO TechStart", text: "Ils ont non seulement réalisé notre app, mais ont aussi proposé des améliorations stratégiques cruciales. Une vraie valeur ajoutée." },
-    { author: "Sophie Bernard", role: "Gérante", text: "Une refonte de site web qui a doublé notre taux de conversion en 3 mois. Le design est magnifique et ultra rapide." },
-    { author: "Marc Dubois", role: "Restaurateur", text: "Mon système de commande en ligne fonctionne à merveille. Merci à toute l'équipe pour leur patience et leur professionnalisme." },
-    { author: "Élise Laurent", role: "Journaliste", text: "Leur expertise en SEO m'a permis d'atteindre la première page de Google en quelques semaines. Impressionnant !" },
+    { author: "home.testimonials.t1.author", role: "home.testimonials.t1.role", text: "home.testimonials.t1.text" },
+    { author: "home.testimonials.t2.author", role: "home.testimonials.t2.role", text: "home.testimonials.t2.text" },
+    { author: "home.testimonials.t3.author", role: "home.testimonials.t3.role", text: "home.testimonials.t3.text" },
+    { author: "home.testimonials.t4.author", role: "home.testimonials.t4.role", text: "home.testimonials.t4.text" },
+    { author: "home.testimonials.t5.author", role: "home.testimonials.t5.role", text: "home.testimonials.t5.text" },
+    { author: "home.testimonials.t6.author", role: "home.testimonials.t6.role", text: "home.testimonials.t6.text" },
 ];
 
 const processSteps = [
-    { title: "Analyse", icon: <Search className="h-6 w-6" /> },
-    { title: "Graphie", icon: <PenTool className="h-6 w-6" /> },
-    { title: "Développement", icon: <Monitor className="h-6 w-6" /> },
-    { title: "Hébergement", icon: <ShieldCheck className="h-6 w-6" /> },
-    { title: "Maintenance", icon: <Cog className="h-6 w-6" /> },
+    { title: "home.process.p1", icon: <Search className="h-6 w-6" /> },
+    { title: "home.process.p2", icon: <PenTool className="h-6 w-6" /> },
+    { title: "home.process.p3", icon: <Monitor className="h-6 w-6" /> },
+    { title: "home.process.p4", icon: <ShieldCheck className="h-6 w-6" /> },
+    { title: "home.process.p5", icon: <Cog className="h-6 w-6" /> },
 ];
 
 export const Home = () => {
-    usePageTitle();
+    const { t, i18n } = useTranslation();
+    usePageTitle(t('home.title'));
     const [latestPosts, setLatestPosts] = useState<BlogPost[]>([]);
+
+    const getTranslatedField = (post: BlogPost, field: 'title' | 'content') => {
+        const lang = i18n.language;
+        if (lang === 'en' && post[`${field}_en` as keyof BlogPost]) return post[`${field}_en` as keyof BlogPost] as string;
+        if (lang === 'es' && post[`${field}_es` as keyof BlogPost]) return post[`${field}_es` as keyof BlogPost] as string;
+        if (lang === 'de' && post[`${field}_de` as keyof BlogPost]) return post[`${field}_de` as keyof BlogPost] as string;
+        return post[field] as string;
+    };
 
     useEffect(() => {
         const fetchLatestPosts = async () => {
@@ -91,9 +108,9 @@ export const Home = () => {
     return (
         <div className="flex flex-col overflow-hidden">
             <SEO
-                title="Agence Digitale à Paris - Développement Web, Mobile & IA"
-                description="Expert en création de sites web sur-mesure, applications mobiles iOS/Android et solutions d'intelligence artificielle. NettmobInfotech booste votre croissance digitale."
-                keywords="agence digitale paris, développement web, création site internet, application mobile ios android, intelligence artificielle entreprise, marketing digital, seo paris, transformation digitale"
+                title={t('home.title')}
+                description={t('home.description')}
+                keywords={t('home.keywords')}
                 schemaData={homeSchema}
             />
             <WelcomePopup />
@@ -102,22 +119,22 @@ export const Home = () => {
                 <div className="container mx-auto px-4 lg:px-8 relative z-10 h-full">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch h-full">
                         {/* Text Column */}
-                        <div className="flex flex-col justify-center py-20 animate-in slide-in-from-left-10 duration-700">
+                        <div className="flex flex-col justify-center py-10 lg:py-20 animate-in slide-in-from-left-10 duration-700">
                             <h1 className="text-5xl lg:text-7xl font-bold font-['Outfit'] tracking-tight text-primary mb-6">
-                                Solutions Informatiques <span className="text-accent underline decoration-4 underline-offset-8">Innovantes</span> pour votre Succès.
+                                {t('home.hero.title')}
                             </h1>
                             <p className="text-xl text-muted-foreground mb-10 leading-relaxed">
-                                NettmobInfotech vous accompagne dans votre transformation digitale avec des services de pointe en développement web, mobile et marketing numérique.
+                                {t('home.hero.subtitle')}
                             </p>
                             <div className="flex flex-wrap gap-4">
-                                <Link to="/demande-de-devis">
+                                <Link to={getLocalizedPath("/demande-de-devis")}>
                                     <Button size="lg" className="rounded-xl px-8 h-14 text-lg shadow-premium hover:scale-105 transition-transform">
-                                        Commencer un Projet <ArrowRight className="ml-2 h-5 w-5" />
+                                        {t('home.hero.startProject')} <ArrowRight className="ml-2 h-5 w-5" />
                                     </Button>
                                 </Link>
-                                <Link to="/cahier-des-charges">
+                                <Link to={getLocalizedPath("/cahier-des-charges")}>
                                     <Button size="lg" variant="outline" className="rounded-xl px-8 h-14 text-lg border-2 hover:bg-accent/5 hover:text-accent dark:hover:text-accent">
-                                        Cahier des Charges
+                                        {t('home.hero.specifications')}
                                     </Button>
                                 </Link>
                             </div>
@@ -144,8 +161,8 @@ export const Home = () => {
                                                 <Zap className="h-7 w-7" />
                                             </div>
                                             <div>
-                                                <p className="text-white font-bold text-xl">Innovation</p>
-                                                <p className="text-white/80 text-sm">Solutions sur mesure</p>
+                                                <p className="text-white font-bold text-xl">{t('home.hero.innovationTitle')}</p>
+                                                <p className="text-white/80 text-sm">{t('home.hero.innovationSubtitle')}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -160,9 +177,9 @@ export const Home = () => {
             <section className="py-24 bg-background">
                 <div className="container mx-auto px-4 lg:px-8">
                     <div className="text-center mb-16">
-                        <h2 className="text-3xl lg:text-4xl font-bold font-['Outfit'] text-primary mb-4">Pourquoi Nous Choisir ?</h2>
+                        <h2 className="text-3xl lg:text-4xl font-bold font-['Outfit'] text-primary mb-4">{t('home.whyChooseUs.title')}</h2>
                         <p className="text-muted-foreground max-w-2xl mx-auto">
-                            Des atouts majeurs qui font la différence pour votre entreprise.
+                            {t('home.whyChooseUs.subtitle')}
                         </p>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -170,29 +187,29 @@ export const Home = () => {
                             <div className="h-16 w-16 mx-auto bg-accent/10 rounded-2xl flex items-center justify-center text-accent mb-6">
                                 <Trophy className="h-8 w-8" />
                             </div>
-                            <h3 className="font-bold text-xl mb-3">Expertise</h3>
-                            <p className="text-muted-foreground text-sm">Une équipe qualifiée maîtrisant les dernières technologies.</p>
+                            <h3 className="font-bold text-xl mb-3">{t('home.whyChooseUs.expertise')}</h3>
+                            <p className="text-muted-foreground text-sm">{t('home.whyChooseUs.expertiseDesc')}</p>
                         </div>
                         <div className="p-8 bg-card rounded-3xl shadow-premium hover:-translate-y-2 transition-transform duration-300 border border-border/50 text-center">
                             <div className="h-16 w-16 mx-auto bg-accent/10 rounded-2xl flex items-center justify-center text-accent mb-6">
                                 <Clock className="h-8 w-8" />
                             </div>
-                            <h3 className="font-bold text-xl mb-3">Rapidité</h3>
-                            <p className="text-muted-foreground text-sm">Des projets livrés dans les temps, sans compromis sur la qualité.</p>
+                            <h3 className="font-bold text-xl mb-3">{t('home.whyChooseUs.speed')}</h3>
+                            <p className="text-muted-foreground text-sm">{t('home.whyChooseUs.speedDesc')}</p>
                         </div>
                         <div className="p-8 bg-card rounded-3xl shadow-premium hover:-translate-y-2 transition-transform duration-300 border border-border/50 text-center">
                             <div className="h-16 w-16 mx-auto bg-accent/10 rounded-2xl flex items-center justify-center text-accent mb-6">
                                 <Users className="h-8 w-8" />
                             </div>
-                            <h3 className="font-bold text-xl mb-3">Écoute</h3>
-                            <p className="text-muted-foreground text-sm">Une relation client privilégiée pour comprendre vos besoins.</p>
+                            <h3 className="font-bold text-xl mb-3">{t('home.whyChooseUs.listening')}</h3>
+                            <p className="text-muted-foreground text-sm">{t('home.whyChooseUs.listeningDesc')}</p>
                         </div>
                         <div className="p-8 bg-card rounded-3xl shadow-premium hover:-translate-y-2 transition-transform duration-300 border border-border/50 text-center">
                             <div className="h-16 w-16 mx-auto bg-accent/10 rounded-2xl flex items-center justify-center text-accent mb-6">
                                 <ShieldCheck className="h-8 w-8" />
                             </div>
-                            <h3 className="font-bold text-xl mb-3">Fiabilité</h3>
-                            <p className="text-muted-foreground text-sm">Des solutions robustes, sécurisées et maintenables.</p>
+                            <h3 className="font-bold text-xl mb-3">{t('home.whyChooseUs.reliability')}</h3>
+                            <p className="text-muted-foreground text-sm">{t('home.whyChooseUs.reliabilityDesc')}</p>
                         </div>
                     </div>
                 </div>
@@ -202,19 +219,23 @@ export const Home = () => {
             <section className="py-16 bg-accent/5">
                 <div className="container mx-auto px-4 lg:px-8">
                     <div className="text-center mb-10">
-                        <h2 className="text-2xl lg:text-3xl font-bold font-['Outfit'] text-primary mb-2">Ils nous font confiance</h2>
+                        <h2 className="text-2xl lg:text-3xl font-bold font-['Outfit'] text-primary mb-2">{t('home.partners')}</h2>
                         <div className="h-1 w-20 bg-accent mx-auto rounded-full"></div>
                     </div>
 
                     <div className="flex flex-wrap justify-center items-center gap-8 lg:gap-12">
                         {[
                             "Design_sans_titre__1___1_-removebg-preview-e1746308979772.png",
+                            "Logo-Gestrom.png",
                             "WhatsApp Image 2026-02-02 at 10.44.26.jpeg",
+                            "WhatsApp_Image_2024-02-07_at_02.02.50-removebg-preview.png",
+                            "favicon.png",
                             "ihi logo.png",
                             "logo NSA 2.png",
                             "logo RIG.png",
                             "logo qia 2.png",
-                            "oryx logo.jpeg"
+                            "oryx logo.jpeg",
+                            "wepik-20240213210818rgH7.png"
                         ].map((logo, index) => (
                             <div key={index} className="bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 w-32 h-32 flex items-center justify-center">
                                 <img
@@ -237,17 +258,17 @@ export const Home = () => {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                         <div className="order-2 lg:order-1">
                             <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-accent/10 text-accent mb-6">
-                                <span className="text-[10px] font-bold uppercase tracking-widest">Qui Sommes Nous</span>
+                                <span className="text-[10px] font-bold uppercase tracking-widest">{t('home.about.badge')}</span>
                             </div>
                             <h2 className="text-3xl lg:text-5xl font-bold font-['Outfit'] text-primary mb-6">
-                                Nettmobinfotech votre partenaire idéale
+                                {t('home.about.title')}
                             </h2>
                             <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-                                Chez Nettmobinfotech, nous nous engageons à offrir une garantie sur notre travail afin de vous assurer une satisfaction totale. Nous développons des solutions sur mesure qui propulsent votre activité.
+                                {t('home.about.description')}
                             </p>
-                            <Link to="/contact">
+                            <Link to={getLocalizedPath("/contact")}>
                                 <Button className="rounded-xl px-8 h-12 shadow-premium bg-accent hover:bg-accent/90 text-white dark:text-white">
-                                    Nous Contacter <ArrowRight className="ml-2 h-4 w-4" />
+                                    {t('home.about.contactUs')} <ArrowRight className="ml-2 h-4 w-4" />
                                 </Button>
                             </Link>
                         </div>
@@ -266,9 +287,9 @@ export const Home = () => {
             <section className="py-24 bg-background">
                 <div className="container mx-auto px-4 lg:px-8">
                     <div className="text-center mb-16">
-                        <h2 className="text-3xl lg:text-4xl font-bold font-['Outfit'] text-primary mb-4">Nos Services d'Excellence</h2>
+                        <h2 className="text-3xl lg:text-4xl font-bold font-['Outfit'] text-primary mb-4">{t('home.services.title')}</h2>
                         <p className="text-muted-foreground max-w-2xl mx-auto">
-                            Une expertise complète pour tous vos besoins technologiques.
+                            {t('home.services.subtitle')}
                         </p>
                     </div>
 
@@ -279,12 +300,12 @@ export const Home = () => {
                                     <div className="mb-6 p-4 bg-accent/5 rounded-2xl inline-block group-hover:bg-accent/10 transition-colors w-fit">
                                         {service.icon}
                                     </div>
-                                    <h3 className="text-xl font-bold mb-3 font-['Outfit']">{service.title}</h3>
+                                    <h3 className="text-xl font-bold mb-3 font-['Outfit']">{t(service.title)}</h3>
                                     <p className="text-muted-foreground leading-relaxed flex-grow">
-                                        {service.description}
+                                        {t(service.description)}
                                     </p>
                                     <div className="mt-6 pt-6 border-t border-border/50 flex items-center text-accent text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity">
-                                        Découvrir <ArrowRight className="ml-2 h-4 w-4" />
+                                        {t('home.services.discover')} <ArrowRight className="ml-2 h-4 w-4" />
                                     </div>
                                 </CardContent>
                             </Card>
@@ -304,16 +325,16 @@ export const Home = () => {
                         <div className="max-w-2xl">
                             <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/10 text-white mb-4 border border-white/20">
                                 <FileText className="h-4 w-4" />
-                                <span className="text-xs font-bold uppercase tracking-widest">Documentation</span>
+                                <span className="text-xs font-bold uppercase tracking-widest">{t('home.documentation.badge')}</span>
                             </div>
-                            <h2 className="text-3xl lg:text-4xl font-bold font-['Outfit'] mb-4">Besoin d'aide pour votre Cahier des Charges ?</h2>
+                            <h2 className="text-3xl lg:text-4xl font-bold font-['Outfit'] mb-4">{t('home.documentation.title')}</h2>
                             <p className="text-lg text-primary-foreground/80 mb-0">
-                                Un cahier des charges bien défini est la clé d'un projet réussi. Découvrez pourquoi et comment nous pouvons vous aider à le structurer.
+                                {t('home.documentation.subtitle')}
                             </p>
                         </div>
-                        <Link to="/cahier-des-charges">
+                        <Link to={getLocalizedPath("/cahier-des-charges")}>
                             <Button size="lg" className="rounded-xl px-8 h-14 bg-white text-primary hover:bg-white/90 font-bold shadow-lg dark:bg-primary dark:text-primary-foreground dark:hover:bg-primary/90">
-                                En Savoir Plus <ArrowRight className="ml-2 h-5 w-5" />
+                                {t('home.documentation.learnMore')} <ArrowRight className="ml-2 h-5 w-5" />
                             </Button>
                         </Link>
                     </div>
@@ -324,9 +345,9 @@ export const Home = () => {
             <section className="py-24 bg-background relative overflow-hidden">
                 <div className="container mx-auto px-4 lg:px-8 relative z-10">
                     <div className="text-center mb-16">
-                        <h2 className="text-3xl lg:text-4xl font-bold font-['Outfit'] mb-4 text-primary">Processus de Travail</h2>
+                        <h2 className="text-3xl lg:text-4xl font-bold font-['Outfit'] mb-4 text-primary">{t('home.process.title')}</h2>
                         <p className="text-muted-foreground max-w-2xl mx-auto">
-                            Une méthode éprouvée pour garantir le succès de votre projet.
+                            {t('home.process.subtitle')}
                         </p>
                     </div>
 
@@ -337,10 +358,10 @@ export const Home = () => {
                         {processSteps.map((step, index) => (
                             <div key={index} className={`flex flex-col items-center text-center group w-full md:w-1/5 ${index < 3 ? 'col-span-2' : 'col-span-3'}`}>
                                 <div className="h-20 w-20 rounded-full bg-card text-accent flex items-center justify-center shadow-premium mb-6 group-hover:scale-110 transition-transform duration-300 border-4 border-background z-10">
-                                    {step.getIcon ? step.getIcon() : step.icon}
+                                    {step.icon}
                                 </div>
-                                <h3 className="text-xl font-bold font-['Outfit'] mb-2">{step.title}</h3>
-                                <div className="text-sm font-bold opacity-50">Étape {index + 1}</div>
+                                <h3 className="font-bold text-xl font-['Outfit'] mb-2">{t(step.title)}</h3>
+                                <div className="text-sm font-bold opacity-50">{t('home.process.step')} {index + 1}</div>
                             </div>
                         ))}
                     </div>
@@ -356,20 +377,20 @@ export const Home = () => {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                         <div className="order-2 lg:order-1">
                             <div className="inline-block px-4 py-1.5 mb-6 text-sm font-bold tracking-wider text-accent uppercase bg-accent/10 rounded-full">
-                                Intelligence Artificielle
+                                {t('home.ai.badge')}
                             </div>
                             <h2 className="text-3xl lg:text-5xl font-bold font-['Outfit'] text-primary mb-6">
-                                Propulsez votre Business avec <span className="text-accent">l'IA</span>
+                                {t('home.ai.title').split('IA')[0]}<span className="text-accent">IA</span>
                             </h2>
                             <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                                Exploitez la puissance de l'Intelligence Artificielle pour automatiser vos processus, améliorer votre relation client et créer des expériences innovantes avec nos chatbots et applications IA sur mesure.
+                                {t('home.ai.description')}
                             </p>
                             <ul className="space-y-4 mb-10">
                                 {[
-                                    "Chatbots IA personnalisés 24/7",
-                                    "Automatisation intelligente",
-                                    "Agents conversationnels avancés",
-                                    "Intégration de modèles LLM"
+                                    t('home.ai.item1'),
+                                    t('home.ai.item2'),
+                                    t('home.ai.item3'),
+                                    t('home.ai.item4')
                                 ].map((item, i) => (
                                     <li key={i} className="flex items-center gap-3 text-foreground">
                                         <div className="h-6 w-6 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
@@ -379,9 +400,9 @@ export const Home = () => {
                                     </li>
                                 ))}
                             </ul>
-                            <Link to="/services/solution-ia">
+                            <Link to={getLocalizedPath("/services/solution-ia")}>
                                 <Button size="lg" className="rounded-xl px-10 h-14 text-lg shadow-premium hover:scale-105 transition-transform">
-                                    Découvrir nos Solutions IA <ArrowRight className="ml-2 h-5 w-5" />
+                                    {t('home.ai.discoverButton')} <ArrowRight className="ml-2 h-5 w-5" />
                                 </Button>
                             </Link>
                         </div>
@@ -400,8 +421,8 @@ export const Home = () => {
             {/* Testimonials Carousel (Marquee) */}
             <section className="py-24 bg-accent/5 overflow-hidden">
                 <div className="container mx-auto px-4 lg:px-8 mb-12 text-center">
-                    <h2 className="text-3xl lg:text-4xl font-bold font-['Outfit'] text-primary mb-4">Ce que disent nos clients</h2>
-                    <p className="text-muted-foreground">La satisfaction client est notre priorité absolue.</p>
+                    <h2 className="text-3xl lg:text-4xl font-bold font-['Outfit'] text-primary mb-4">{t('home.testimonials.title')}</h2>
+                    <p className="text-muted-foreground">{t('home.testimonials.subtitle')}</p>
                 </div>
 
                 {/* Marquee Container */}
@@ -414,15 +435,15 @@ export const Home = () => {
                                         {[1, 2, 3, 4, 5].map(i => <Star key={i} className="h-4 w-4 fill-current" />)}
                                     </div>
                                     <p className="text-muted-foreground italic mb-6 leading-relaxed text-sm flex-grow">
-                                        "{testimonial.text}"
+                                        "{t(testimonial.text)}"
                                     </p>
                                     <div className="flex items-center gap-4 mt-auto">
                                         <div className="h-10 w-10 rounded-full bg-accent text-white flex items-center justify-center font-bold text-sm">
                                             {testimonial.author.charAt(0)}
                                         </div>
                                         <div>
-                                            <h4 className="font-bold text-primary text-sm">{testimonial.author}</h4>
-                                            <p className="text-[10px] text-muted-foreground uppercase tracking-wider">{testimonial.role}</p>
+                                            <h4 className="font-bold text-primary text-sm">{t(testimonial.author)}</h4>
+                                            <p className="text-[10px] text-muted-foreground uppercase tracking-wider">{t(testimonial.role)}</p>
                                         </div>
                                     </div>
                                 </CardContent>
@@ -433,17 +454,17 @@ export const Home = () => {
             </section>
 
             {/* Latest News Section */}
-            {latestPosts.length > 0 && (
+            {latestPosts?.length > 0 && (
                 <section className="py-24 bg-background">
                     <div className="container mx-auto px-4 lg:px-8">
                         <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
                             <div>
-                                <h2 className="text-3xl lg:text-4xl font-bold font-['Outfit'] text-primary mb-2">Dernières du <span className="text-accent">Blog</span></h2>
-                                <p className="text-muted-foreground">Restez informés des dernières tendances.</p>
+                                <h2 className="text-3xl lg:text-4xl font-bold font-['Outfit'] text-primary mb-2">{t('home.blog.title').split('Blog')[0]}<span className="text-accent">Blog</span></h2>
+                                <p className="text-muted-foreground">{t('home.blog.subtitle')}</p>
                             </div>
-                            <Link to="/actus">
+                            <Link to={getLocalizedPath("/actus")}>
                                 <Button variant="link" className="text-accent font-bold h-auto p-0 group">
-                                    Voir tous les articles <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                                    {t('home.blog.allArticles')} <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                                 </Button>
                             </Link>
                         </div>
@@ -451,33 +472,37 @@ export const Home = () => {
                         {/* Articles + Vertical Ad sidebar */}
                         <div className="flex flex-col lg:flex-row gap-8 items-stretch w-full">
                             <div className="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                {latestPosts.map((post) => (
-                                    <Link key={post.id} to={`/actus/${post.slug}`} className="group h-full">
-                                        <Card className="border-none shadow-premium bg-card rounded-3xl overflow-hidden h-full transition-all duration-500 hover:shadow-2xl hover:-translate-y-2">
-                                            <div className="relative aspect-[16/10] overflow-hidden">
-                                                <img
-                                                    src={post.imageUrl || "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop"}
-                                                    alt={post.title}
-                                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                                                />
-                                                <div className="absolute top-4 left-4">
-                                                    <span className="bg-background/90 backdrop-blur-sm text-accent text-[10px] px-3 py-1 rounded-full font-bold uppercase shadow-sm">
-                                                        {post.category}
-                                                    </span>
+                                {latestPosts.map((post) => {
+                                    const displayTitle = getTranslatedField(post, 'title');
+                                    const displayContent = getTranslatedField(post, 'content');
+                                    return (
+                                        <Link key={post.id} to={getLocalizedPath(`/actus/${post.slug}`)} className="group h-full">
+                                            <Card className="border-none shadow-premium bg-card rounded-3xl overflow-hidden h-full transition-all duration-500 hover:shadow-2xl hover:-translate-y-2">
+                                                <div className="relative aspect-[16/10] overflow-hidden">
+                                                    <img
+                                                        src={post.imageUrl || "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop"}
+                                                        alt={displayTitle}
+                                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                                    />
+                                                    <div className="absolute top-4 left-4">
+                                                        <span className="bg-background/90 backdrop-blur-sm text-accent text-[10px] px-3 py-1 rounded-full font-bold uppercase shadow-sm">
+                                                            {post.category}
+                                                        </span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <CardContent className="p-6">
-                                                <div className="flex items-center gap-4 text-[10px] text-muted-foreground mb-3 font-medium uppercase tracking-wider">
-                                                    <span>{new Date(post.createdAt).toLocaleDateString('fr-FR')}</span>
-                                                </div>
-                                                <h3 className="font-bold text-lg mb-3 line-clamp-2 group-hover:text-accent transition-colors leading-tight">{post.title}</h3>
-                                                <p className="text-sm text-muted-foreground leading-relaxed line-clamp-4">
-                                                    {post.content.replace(/<[^>]*>/g, '').substring(0, 200)}...
-                                                </p>
-                                            </CardContent>
-                                        </Card>
-                                    </Link>
-                                ))}
+                                                <CardContent className="p-6">
+                                                    <div className="flex items-center gap-4 text-[10px] text-muted-foreground mb-3 font-medium uppercase tracking-wider">
+                                                        <span>{new Date(post.createdAt).toLocaleDateString(i18n.language === 'en' ? 'en-US' : i18n.language === 'es' ? 'es-ES' : i18n.language === 'de' ? 'de-DE' : 'fr-FR')}</span>
+                                                    </div>
+                                                    <h3 className="font-bold text-lg mb-3 line-clamp-2 group-hover:text-accent transition-colors leading-tight">{displayTitle}</h3>
+                                                    <p className="text-sm text-muted-foreground leading-relaxed line-clamp-4">
+                                                        {displayContent.replace(/<[^>]*>/g, '').substring(0, 200)}...
+                                                    </p>
+                                                </CardContent>
+                                            </Card>
+                                        </Link>
+                                    );
+                                })}
                             </div>
                             {/* Vertical Ad — sidebar beside articles (now visible on all devices) */}
                             <div className="shrink-0 w-full lg:w-[350px] flex items-center justify-center bg-accent/5 rounded-3xl p-4 lg:p-0">

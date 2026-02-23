@@ -13,6 +13,15 @@ export interface Ad {
     format: AdFormat;
     pages: string[];
     isActive: boolean;
+    title_en?: string;
+    description_en?: string;
+    buttonText_en?: string;
+    title_es?: string;
+    description_es?: string;
+    buttonText_es?: string;
+    title_de?: string;
+    description_de?: string;
+    buttonText_de?: string;
     createdAt: string;
 }
 

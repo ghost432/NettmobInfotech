@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import {
-    Mail, Users, Upload, Send, Plus, Trash2, Search,
+    Users, Upload, Send, Plus, Trash2, Search,
     CheckCircle, AlertCircle, FileText, X, Loader2,
     ChevronLeft, ChevronRight, PartyPopper
 } from "lucide-react";

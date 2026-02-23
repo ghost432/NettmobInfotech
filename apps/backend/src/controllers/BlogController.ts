@@ -4,6 +4,7 @@ import { inject } from "inversify";
 import { TYPES } from "../types";
 import { BlogRepo, BlogPost } from "../repositories/BlogRepo";
 import { adminMiddleware } from "../middlewares/authMiddleware";
+import * as https from "https";
 
 @controller("/api/blog")
 export class BlogController {
@@ -80,6 +81,84 @@ export class BlogController {
     }
 
     // Admin Endpoints
+    @httpPost("/translate", adminMiddleware)
+    public async translateText(@request() req: Request, @response() res: Response) {
+        console.log("Entering translateText with body:", req.body);
+        try {
+            const { text, targetLang } = req.body;
+            if (!text || !targetLang) return res.status(400).json({ message: "text and targetLang are required" });
+
+            const apiKey = process.env.DEEPL_API_KEY;
+            if (!apiKey) {
+                console.error("DEEPL_API_KEY is not defined in environment variables");
+                return res.status(500).json({ message: "La clé API de traduction n'est pas configurée." });
+            }
+
+            // DeepL API requires the language code to be uppercase in most cases (e.g. EN, DE, ES)
+            // However, British/American English might require specific EN-GB or EN-US for target lang
+            // For general 'en', 'es', 'de' from our frontend, we'll convert to uppercase.
+            const targetLangUpper = targetLang.toUpperCase() === 'EN' ? 'EN-US' : targetLang.toUpperCase();
+
+            // Depending on the key ending in :fx, it uses the free API URL
+            const apiUrl = apiKey.endsWith(':fx')
+                ? 'https://api-free.deepl.com/v2/translate'
+                : 'https://api.deepl.com/v2/translate';
+
+            const payloadData = JSON.stringify({
+                text: [text],
+                target_lang: targetLangUpper,
+                source_lang: 'FR'
+            });
+
+            const parsedUrl = new URL(apiUrl);
+
+            const reqOptions = {
+                hostname: parsedUrl.hostname,
+                path: parsedUrl.pathname,
+                method: 'POST',
+                family: 4, // force IPv4 to avoid ETIMEDOUT bugs
+                headers: {
+                    'Authorization': `DeepL-Auth-Key ${apiKey}`,
+                    'Content-Type': 'application/json',
+                    'Content-Length': Buffer.byteLength(payloadData)
+                }
+            };
+
+            const data = await new Promise<any>((resolve, reject) => {
+                const request = https.request(reqOptions, (resObj) => {
+                    let responseData = "";
+                    resObj.on("data", chunk => responseData += chunk);
+                    resObj.on("end", () => {
+                        if (resObj.statusCode && resObj.statusCode >= 400) {
+                            reject(new Error(`DeepL API Error (${resObj.statusCode}): ${responseData}`));
+                        } else {
+                            try {
+                                resolve(JSON.parse(responseData));
+                            } catch (e) {
+                                reject(e);
+                            }
+                        }
+                    });
+                });
+                request.on("error", reject);
+                request.write(payloadData);
+                request.end();
+            });
+
+            console.log("DeepL Data received:", data);
+
+            if (data && data.translations && data.translations.length > 0) {
+                return res.json({ translatedText: data.translations[0].text });
+            }
+
+            console.log("Translation failed structure, returning 500");
+            return res.status(500).json({ message: "Translation failed to return expected data structure" });
+        } catch (error) {
+            console.error("Translation error Caught:", error);
+            return res.status(500).json({ message: "Internal server error during translation" });
+        }
+    }
+
     @httpPost("/", adminMiddleware)
     public async createPost(@request() req: Request, @response() res: Response) {
         try {

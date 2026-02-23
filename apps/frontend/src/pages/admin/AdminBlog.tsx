@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Plus, Search, Edit2, Trash2, Eye, LayoutGrid, List, CheckCircle, XCircle, Image as ImageIcon, ThumbsUp, ThumbsDown } from "lucide-react";
+import { Plus, Search, Edit2, Trash2, Eye, List, Image as ImageIcon, ThumbsUp, ThumbsDown, Wand2, Loader2 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -51,6 +51,12 @@ interface BlogPost {
     title: string;
     slug: string;
     content: string;
+    title_en?: string;
+    content_en?: string;
+    title_es?: string;
+    content_es?: string;
+    title_de?: string;
+    content_de?: string;
     imageUrl: string;
     category: string;
     author: string;
@@ -72,11 +78,18 @@ const CATEGORIES = [
 export const AdminBlog = () => {
     const [posts, setPosts] = useState<BlogPost[]>([]);
     const [loading, setLoading] = useState(true);
+    const [isTranslating, setIsTranslating] = useState(false);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
     const [formData, setFormData] = useState({
         title: "",
         content: "",
+        title_en: "",
+        content_en: "",
+        title_es: "",
+        content_es: "",
+        title_de: "",
+        content_de: "",
         category: CATEGORIES[0],
         imageUrl: "",
         author: "L'équipe NettmobInfotech"
@@ -111,6 +124,12 @@ export const AdminBlog = () => {
             setFormData({
                 title: post.title,
                 content: post.content,
+                title_en: post.title_en || "",
+                content_en: post.content_en || "",
+                title_es: post.title_es || "",
+                content_es: post.content_es || "",
+                title_de: post.title_de || "",
+                content_de: post.content_de || "",
                 category: post.category,
                 imageUrl: post.imageUrl || "",
                 author: post.author
@@ -120,11 +139,18 @@ export const AdminBlog = () => {
             setFormData({
                 title: "",
                 content: "",
+                title_en: "",
+                content_en: "",
+                title_es: "",
+                content_es: "",
+                title_de: "",
+                content_de: "",
                 category: CATEGORIES[0],
                 imageUrl: "",
                 author: "L'équipe NettmobInfotech"
             });
         }
+        setActiveLang("fr");
         setIsDialogOpen(true);
     };
 
@@ -160,6 +186,43 @@ export const AdminBlog = () => {
         }
     };
 
+    const handleAutoTranslate = async () => {
+        if (!formData.title || !formData.content) {
+            toast.error("Veuillez remplir le titre et le contenu en français d'abord");
+            return;
+        }
+
+        setIsTranslating(true);
+        const toastId = toast.loading("Traduction automatique en cours...");
+
+        try {
+            const langs = ['en', 'es', 'de'];
+            const newFormData = { ...formData };
+
+            for (const lang of langs) {
+                const titleRes = await api.post("/blog/translate", { text: formData.title, targetLang: lang });
+                if (lang === 'en') newFormData.title_en = titleRes.data.translatedText;
+                if (lang === 'es') newFormData.title_es = titleRes.data.translatedText;
+                if (lang === 'de') newFormData.title_de = titleRes.data.translatedText;
+
+                const contentRes = await api.post("/blog/translate", { text: formData.content, targetLang: lang });
+                if (lang === 'en') newFormData.content_en = contentRes.data.translatedText;
+                if (lang === 'es') newFormData.content_es = contentRes.data.translatedText;
+                if (lang === 'de') newFormData.content_de = contentRes.data.translatedText;
+            }
+
+            setFormData(newFormData);
+            toast.success("Traduction terminée !", { id: toastId });
+            // Switch to English to show results
+            setActiveLang('en');
+        } catch (error) {
+            console.error("Erreur de traduction:", error);
+            toast.error("Erreur lors de la traduction auto.", { id: toastId });
+        } finally {
+            setIsTranslating(false);
+        }
+    };
+
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
@@ -186,6 +249,14 @@ export const AdminBlog = () => {
         p.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         p.category.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+    const [activeLang, setActiveLang] = useState("fr");
+    const languages = [
+        { code: "fr", name: "Français (Défaut)" },
+        { code: "en", name: "English" },
+        { code: "es", name: "Español" },
+        { code: "de", name: "Deutsch" }
+    ];
 
     return (
         <div className="space-y-8 animate-in fade-in duration-700">
@@ -329,7 +400,7 @@ export const AdminBlog = () => {
 
             {/* Edit/Create Dialog */}
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto rounded-[2rem] border-border/50 bg-background/95 backdrop-blur-xl">
+                <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto rounded-[2rem] border-border/50 bg-background/95 backdrop-blur-xl">
                     <DialogHeader>
                         <DialogTitle className="text-2xl font-black">
                             {editingPost ? "Modifier l'article" : "Nouvel Article"}
@@ -339,15 +410,7 @@ export const AdminBlog = () => {
                         </DialogDescription>
                     </DialogHeader>
                     <div className="space-y-6 py-4 px-2">
-                        <div className="space-y-2">
-                            <label className="text-sm font-bold">Titre de l'article</label>
-                            <Input
-                                value={formData.title}
-                                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                                className="rounded-2xl h-12 bg-muted/50 border-border/50"
-                                placeholder="Titre accrocheur..."
-                            />
-                        </div>
+                        {/* Meta Info */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="space-y-2">
                                 <label className="text-sm font-bold">Catégorie</label>
@@ -397,13 +460,74 @@ export const AdminBlog = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="space-y-2 min-h-[400px]">
-                            <label className="text-sm font-bold">Contenu de l'article</label>
-                            <QuillEditor
-                                value={formData.content}
-                                onChange={(v) => setFormData({ ...formData, content: v })}
-                                modules={modules}
-                            />
+
+                        {/* Translation Tabs */}
+                        <div className="border border-border/50 rounded-2xl p-4 bg-card/50">
+                            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+                                <div className="flex flex-wrap gap-2">
+                                    {languages.map(lang => (
+                                        <Button
+                                            key={lang.code}
+                                            type="button"
+                                            variant={activeLang === lang.code ? "default" : "outline"}
+                                            onClick={() => setActiveLang(lang.code)}
+                                            className={`rounded-xl ${activeLang === lang.code ? 'bg-accent text-white shadow-premium' : 'hover:bg-accent/10 border-border/50'}`}
+                                        >
+                                            {lang.name}
+                                        </Button>
+                                    ))}
+                                </div>
+                                <Button
+                                    type="button"
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={handleAutoTranslate}
+                                    disabled={isTranslating || !formData.title}
+                                    className="rounded-xl border-accent/50 text-accent hover:bg-accent hover:text-white shrink-0 font-bold"
+                                >
+                                    {isTranslating ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Wand2 className="h-4 w-4 mr-2" />}
+                                    Auto-Traduire (FR → EN, ES, DE)
+                                </Button>
+                            </div>
+
+                            {/* Dynamic Inputs Based on Language */}
+                            <div className="space-y-6">
+                                <div className="space-y-2">
+                                    <label className="text-sm font-bold flex items-center justify-between">
+                                        Titre de l'article ({activeLang.toUpperCase()})
+                                        {activeLang === 'fr' && <span className="text-xs text-red-500">*Requis</span>}
+                                    </label>
+                                    <Input
+                                        value={activeLang === 'fr' ? formData.title : activeLang === 'en' ? formData.title_en : activeLang === 'es' ? formData.title_es : formData.title_de}
+                                        onChange={(e) => {
+                                            const val = e.target.value;
+                                            if (activeLang === 'fr') setFormData({ ...formData, title: val });
+                                            if (activeLang === 'en') setFormData({ ...formData, title_en: val });
+                                            if (activeLang === 'es') setFormData({ ...formData, title_es: val });
+                                            if (activeLang === 'de') setFormData({ ...formData, title_de: val });
+                                        }}
+                                        className="rounded-2xl h-12 border-border/50 focus-visible:ring-accent"
+                                        placeholder={`Titre en ${activeLang.toUpperCase()}...`}
+                                    />
+                                </div>
+                                <div className="space-y-2 min-h-[400px]">
+                                    <label className="text-sm font-bold flex items-center justify-between">
+                                        Contenu de l'article ({activeLang.toUpperCase()})
+                                        {activeLang === 'fr' && <span className="text-xs text-red-500">*Requis</span>}
+                                    </label>
+                                    <QuillEditor
+                                        key={`quill-${activeLang}`} // Force re-render to avoid state collision
+                                        value={activeLang === 'fr' ? formData.content : activeLang === 'en' ? formData.content_en : activeLang === 'es' ? formData.content_es : formData.content_de}
+                                        onChange={(v) => {
+                                            if (activeLang === 'fr') setFormData({ ...formData, content: v });
+                                            if (activeLang === 'en') setFormData({ ...formData, content_en: v });
+                                            if (activeLang === 'es') setFormData({ ...formData, content_es: v });
+                                            if (activeLang === 'de') setFormData({ ...formData, content_de: v });
+                                        }}
+                                        modules={modules}
+                                    />
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <DialogFooter className="sticky bottom-0 bg-background/95 pt-4 border-t border-border/50 pb-2">

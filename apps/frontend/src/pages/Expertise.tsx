@@ -1,37 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { CheckCircle2, Code2, Globe, Smartphone, BarChart3, ShieldCheck, Database, Cloud, Zap, Layers, ArrowRight } from "lucide-react";
+import { CheckCircle2, Globe, Smartphone, BarChart3, ShieldCheck, Zap, Layers, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { usePageTitle } from "@/hooks/usePageTitle";
 import { SEO } from "@/components/common/SEO";
 import { AdBanner } from "@/components/common/AdBanner";
-
-const expertises = [
-    {
-        title: "Développement Web",
-        description: "Sites vitrines, e-commerce et applications web complexes. Nous créons des expériences en ligne performantes et responsives.",
-        icon: <Globe className="h-8 w-8 text-accent" />,
-        features: ["Sites Vitrines & Institutionnels", "E-commerce (WooCommerce, Shopify)", "Applications Web (React, Vue)", "Intégration API & Tiers"]
-    },
-    {
-        title: "Applications Mobiles",
-        description: "Transformez vos idées en applications iOS et Android natives ou hybrides, conçues pour une expérience utilisateur fluide.",
-        icon: <Smartphone className="h-8 w-8 text-accent" />,
-        features: ["iOS & Android (React Native, Flutter)", "UX/UI Mobile First", "Performance & Fluidité", "Publication Stores"]
-    },
-    {
-        title: "Marketing Digital & SEO",
-        description: "Maximisez votre visibilité en ligne et attirez plus de clients grâce à nos stratégies marketing basées sur les données.",
-        icon: <BarChart3 className="h-8 w-8 text-accent" />,
-        features: ["Audit & Stratégie SEO", "Publicité en ligne (Ads)", "Gestion Réseaux Sociaux", "Marketing de Contenu"]
-    },
-    {
-        title: "Infrastructure & Sécurité",
-        description: "Assurez la disponibilité et la sécurité de vos données avec nos solutions d'hébergement et de maintenance robustes.",
-        icon: <ShieldCheck className="h-8 w-8 text-accent" />,
-        features: ["Hébergement Cloud Sécurisé", "Maintenance Préventive", "Sauvegardes Automatiques", "Conformité RGPD"]
-    }
-];
+import { useTranslation } from "react-i18next";
+import { getLocalizedPath } from "@/lib/i18nUtils";
 
 const technologies = [
     { name: "React", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
@@ -45,14 +20,15 @@ const technologies = [
 ];
 
 export const Expertise = () => {
-    usePageTitle();
+    const { t } = useTranslation();
+    usePageTitle(t('expertise.title'));
 
     return (
         <div className="flex flex-col">
             <SEO
-                title="Notre Expertise - Technologies & Compétences | NettmobInfotech"
-                description="Découvrez nos expertises en développement web, mobile et IA. Maîtrise de React, Node.js, TypeScript, Flutter et technologies de pointe. Solutions performantes et sécurisées."
-                keywords="React, Node.js, TypeScript, Flutter, technologies web, expertise technique, développement fullstack, MySQL, Docker, Next.js"
+                title={t('expertise.title')}
+                description={t('expertise.description')}
+                keywords={t('expertise.keywords')}
             />
             {/* Hero Section */}
             <section className="relative py-20 lg:py-32 bg-background overflow-hidden">
@@ -60,13 +36,13 @@ export const Expertise = () => {
                     <div className="max-w-3xl mx-auto text-center">
                         <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-accent/10 text-accent mb-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
                             <Layers className="h-4 w-4" />
-                            <span className="text-xs font-bold uppercase tracking-widest">Savoir-Faire & Innovation</span>
+                            <span className="text-xs font-bold uppercase tracking-widest">{t('expertise.hero.badge')}</span>
                         </div>
                         <h1 className="text-4xl lg:text-6xl font-bold font-['Outfit'] tracking-tight text-primary mb-6 animate-in fade-in slide-in-from-bottom-6 duration-700 delay-100">
-                            Une Expertise Technique au Service de votre <span className="text-accent">Croissance</span>
+                            {t('expertise.hero.title').split('<span class=\'text-accent\'>')[0]}<span className="text-accent">{t('expertise.hero.title').split('<span class=\'text-accent\'>')[1].split('</span>')[0]}</span>
                         </h1>
                         <p className="text-xl text-muted-foreground mb-10 leading-relaxed max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
-                            Nous combinons créativité, stratégie et excellence technique pour développer des solutions digitales sur mesure qui propulsent votre entreprise.
+                            {t('expertise.hero.desc')}
                         </p>
                     </div>
                 </div>
@@ -78,7 +54,32 @@ export const Expertise = () => {
             <section className="py-24 bg-card">
                 <div className="container mx-auto px-4 lg:px-8">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-                        {expertises.map((item, index) => (
+                        {[
+                            {
+                                title: t('expertise.core.web.title'),
+                                description: t('expertise.core.web.desc'),
+                                icon: <Globe className="h-8 w-8 text-accent" />,
+                                features: [t('expertise.core.web.f1'), t('expertise.core.web.f2'), t('expertise.core.web.f3'), t('expertise.core.web.f4')]
+                            },
+                            {
+                                title: t('expertise.core.mobile.title'),
+                                description: t('expertise.core.mobile.desc'),
+                                icon: <Smartphone className="h-8 w-8 text-accent" />,
+                                features: [t('expertise.core.mobile.f1'), t('expertise.core.mobile.f2'), t('expertise.core.mobile.f3'), t('expertise.core.mobile.f4')]
+                            },
+                            {
+                                title: t('expertise.core.marketing.title'),
+                                description: t('expertise.core.marketing.desc'),
+                                icon: <BarChart3 className="h-8 w-8 text-accent" />,
+                                features: [t('expertise.core.marketing.f1'), t('expertise.core.marketing.f2'), t('expertise.core.marketing.f3'), t('expertise.core.marketing.f4')]
+                            },
+                            {
+                                title: t('expertise.core.security.title'),
+                                description: t('expertise.core.security.desc'),
+                                icon: <ShieldCheck className="h-8 w-8 text-accent" />,
+                                features: [t('expertise.core.security.f1'), t('expertise.core.security.f2'), t('expertise.core.security.f3'), t('expertise.core.security.f4')]
+                            }
+                        ].map((item, index) => (
                             <Card key={index} className="border-none shadow-premium bg-background hover:shadow-2xl transition-all duration-300 group overflow-hidden">
                                 <CardContent className="p-8 lg:p-10 flex flex-col h-full">
                                     <div className="mb-6 p-4 bg-accent/10 rounded-2xl w-fit group-hover:scale-110 transition-transform duration-300">
@@ -106,7 +107,7 @@ export const Expertise = () => {
             {/* Tech Stack */}
             <section className="py-24 bg-background">
                 <div className="container mx-auto px-4 lg:px-8 text-center">
-                    <h2 className="text-3xl font-bold font-['Outfit'] mb-16 text-primary">Technologies Maîtrisées</h2>
+                    <h2 className="text-3xl font-bold font-['Outfit'] mb-16 text-primary">{t('expertise.tech.title')}</h2>
                     <div className="flex flex-wrap justify-center gap-8 lg:gap-12">
                         {technologies.map((tech, index) => (
                             <div key={index} className="flex flex-col items-center gap-3 group">
@@ -128,26 +129,26 @@ export const Expertise = () => {
                 <div className="container mx-auto px-4 lg:px-8 relative z-10">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                         <div className="order-2 lg:order-1">
-                            <h2 className="text-3xl lg:text-4xl font-bold font-['Outfit'] text-primary mb-6">Notre Approche "Guichet Unique"</h2>
+                            <h2 className="text-3xl lg:text-4xl font-bold font-['Outfit'] text-primary mb-6">{t('expertise.approach.title')}</h2>
                             <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                                Chez NettmobInfotech, nous croyons en une approche holistique. Nous ne livrons pas seulement du code, mais une solution complète qui intègre stratégie, design, développement et maintenance.
+                                {t('expertise.approach.p1')}
                             </p>
                             <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-                                Notre philosophie est simple : comprendre votre métier pour construire l'outil numérique qui vous correspond parfaitement, sans superflu technique.
+                                {t('expertise.approach.p2')}
                             </p>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                 <div className="flex items-start gap-3">
                                     <div className="p-2 bg-background rounded-lg shadow-sm text-accent"><Zap className="h-5 w-5" /></div>
                                     <div>
-                                        <h4 className="font-bold text-primary">Performance</h4>
-                                        <p className="text-sm text-muted-foreground">Solutions optimisées et rapides.</p>
+                                        <h4 className="font-bold text-primary">{t('expertise.approach.perf.title')}</h4>
+                                        <p className="text-sm text-muted-foreground">{t('expertise.approach.perf.desc')}</p>
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-3">
                                     <div className="p-2 bg-background rounded-lg shadow-sm text-accent"><ShieldCheck className="h-5 w-5" /></div>
                                     <div>
-                                        <h4 className="font-bold text-primary">Sécurité</h4>
-                                        <p className="text-sm text-muted-foreground">Protection des données par design.</p>
+                                        <h4 className="font-bold text-primary">{t('expertise.approach.sec.title')}</h4>
+                                        <p className="text-sm text-muted-foreground">{t('expertise.approach.sec.desc')}</p>
                                     </div>
                                 </div>
                             </div>
@@ -157,7 +158,7 @@ export const Expertise = () => {
                                 <div className="absolute inset-0 bg-accent/20 blur-3xl rounded-full transform rotate-12"></div>
                                 <img
                                     src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop"
-                                    alt="Notre Approche Guichet Unique"
+                                    alt={t('expertise.approach.title')}
                                     className="relative rounded-3xl shadow-2xl w-full h-[400px] object-cover transform hover:scale-[1.02] transition-transform duration-500"
                                 />
                             </div>
@@ -172,13 +173,13 @@ export const Expertise = () => {
             {/* CTA */}
             <section className="py-20 bg-background text-center">
                 <div className="container mx-auto px-4">
-                    <h2 className="text-3xl lg:text-4xl font-bold font-['Outfit'] text-primary mb-6">Prêt à concrétiser votre projet ?</h2>
+                    <h2 className="text-3xl lg:text-4xl font-bold font-['Outfit'] text-primary mb-6">{t('expertise.cta.title')}</h2>
                     <p className="text-muted-foreground max-w-2xl mx-auto mb-10 text-lg">
-                        Discutons de vos besoins et voyons comment notre expertise peut vous aider à atteindre vos objectifs.
+                        {t('expertise.cta.desc')}
                     </p>
-                    <Link to="/cahier-des-charges">
+                    <Link to={getLocalizedPath("/cahier-des-charges")}>
                         <Button size="lg" className="rounded-xl px-10 h-14 text-lg shadow-premium hover:scale-105 transition-transform">
-                            Parlons de votre projet <ArrowRight className="ml-2 h-5 w-5" />
+                            {t('expertise.cta.button')} <ArrowRight className="ml-2 h-5 w-5" />
                         </Button>
                     </Link>
                 </div>

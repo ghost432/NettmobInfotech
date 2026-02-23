@@ -1,14 +1,13 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, FileText, CheckCircle2, HelpCircle, Send, X } from "lucide-react";
-import { Link } from "react-router-dom";
+import { FileText, CheckCircle2, Send } from "lucide-react";
 import { usePageTitle } from "@/hooks/usePageTitle";
-import { SEO } from "@/components/common/SEO";
 import { AdBanner } from "@/components/common/AdBanner";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import api from "@/lib/api";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { useTranslation } from "react-i18next";
 
 interface SpecificationForm {
     companyName: string;
@@ -24,7 +23,8 @@ interface SpecificationForm {
 }
 
 export const CahierDesCharges = () => {
-    usePageTitle();
+    const { t } = useTranslation();
+    usePageTitle(t('cahier.title'));
     const { register, handleSubmit, reset, watch, formState: { errors, isSubmitting } } = useForm<SpecificationForm>();
     const projectType = watch("projectType");
     const [showSuccess, setShowSuccess] = useState(false);
@@ -36,7 +36,7 @@ export const CahierDesCharges = () => {
             reset();
         } catch (error) {
             console.error(error);
-            toast.error("Une erreur est survenue. Veuillez réessayer.");
+            toast.error(t('contact.form.error'));
         }
     };
 
@@ -47,13 +47,13 @@ export const CahierDesCharges = () => {
                 <div className="container mx-auto px-4 relative z-10 text-center">
                     <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-accent/10 text-accent mb-6">
                         <FileText className="h-4 w-4" />
-                        <span className="text-xs font-bold uppercase tracking-widest">Guide Projet</span>
+                        <span className="text-xs font-bold uppercase tracking-widest">{t('cahier.hero.badge')}</span>
                     </div>
                     <h1 className="text-4xl lg:text-6xl font-bold font-['Outfit'] text-primary mb-6">
-                        Le Cahier des Charges
+                        {t('cahier.hero.title')}
                     </h1>
                     <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
-                        La pièce maîtresse pour garantir le succès de votre projet digital. Une vision claire pour un résultat conforme à vos attentes.
+                        {t('cahier.hero.desc')}
                     </p>
                 </div>
             </section>
@@ -104,24 +104,24 @@ export const CahierDesCharges = () => {
                             <div className="absolute top-0 right-0 p-8 opacity-5 pointer-events-none">
                                 <FileText className="h-32 w-32" />
                             </div>
-                            <h3 className="text-2xl font-bold font-['Outfit'] text-primary mb-6">Soumettre votre Cahier des Charges</h3>
+                            <h3 className="text-2xl font-bold font-['Outfit'] text-primary mb-6">{t('cahier.form.title')}</h3>
                             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 relative z-10">
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="space-y-2">
-                                        <label className="text-sm font-medium">Nom de l'entreprise</label>
+                                        <label className="text-sm font-medium">{t('cahier.form.company')}</label>
                                         <input
                                             {...register("companyName", { required: "Requis" })}
                                             className="w-full p-3 rounded-xl bg-accent/5 border border-transparent focus:border-accent focus:bg-background transition-all outline-none"
-                                            placeholder="Votre entreprise"
+                                            placeholder={t('cahier.form.company')}
                                         />
                                         {errors.companyName && <span className="text-xs text-red-500">{errors.companyName.message}</span>}
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-sm font-medium">Nom du contact</label>
+                                        <label className="text-sm font-medium">{t('cahier.form.contact')}</label>
                                         <input
                                             {...register("contactName", { required: "Requis" })}
                                             className="w-full p-3 rounded-xl bg-accent/5 border border-transparent focus:border-accent focus:bg-background transition-all outline-none"
-                                            placeholder="Votre nom"
+                                            placeholder={t('cahier.form.contact')}
                                         />
                                         {errors.contactName && <span className="text-xs text-red-500">{errors.contactName.message}</span>}
                                     </div>
@@ -129,28 +129,28 @@ export const CahierDesCharges = () => {
 
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="space-y-2">
-                                        <label className="text-sm font-medium">Email</label>
+                                        <label className="text-sm font-medium">{t('cahier.form.email')}</label>
                                         <input
                                             type="email"
                                             {...register("email", { required: "Requis" })}
                                             className="w-full p-3 rounded-xl bg-accent/5 border border-transparent focus:border-accent focus:bg-background transition-all outline-none"
-                                            placeholder="email@exemple.com"
+                                            placeholder={t('contact.form.emailPlaceholder')}
                                         />
                                         {errors.email && <span className="text-xs text-red-500">{errors.email.message}</span>}
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-sm font-medium">Téléphone</label>
+                                        <label className="text-sm font-medium">{t('cahier.form.phone')}</label>
                                         <input
                                             {...register("phone", { required: "Requis" })}
                                             className="w-full p-3 rounded-xl bg-accent/5 border border-transparent focus:border-accent focus:bg-background transition-all outline-none"
-                                            placeholder="06 12 34 56 78"
+                                            placeholder={t('contact.form.phonePlaceholder')}
                                         />
                                         {errors.phone && <span className="text-xs text-red-500">{errors.phone.message}</span>}
                                     </div>
                                 </div>
 
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium">Type de Projet</label>
+                                    <label className="text-sm font-medium">{t('cahier.form.type')}</label>
                                     <select
                                         {...register("projectType", { required: "Requis" })}
                                         className="w-full p-3 rounded-xl bg-accent/5 border border-transparent focus:border-accent focus:bg-background transition-all outline-none"
@@ -169,30 +169,30 @@ export const CahierDesCharges = () => {
 
                                 {projectType === "Autre" && (
                                     <div className="space-y-2 animate-in fade-in slide-in-from-top-2 duration-300">
-                                        <label className="text-sm font-medium">Précisez le type de projet</label>
+                                        <label className="text-sm font-medium">{t('cahier.form.typeOther')}</label>
                                         <input
                                             {...register("otherProjectType", { required: "Veuillez préciser le type" })}
                                             className="w-full p-3 rounded-xl bg-accent/5 border border-transparent focus:border-accent focus:bg-background transition-all outline-none"
-                                            placeholder="Ex: SaaS, Automatisation, etc."
+                                            placeholder={t('cahier.form.typeOther')}
                                         />
                                         {errors.otherProjectType && <span className="text-xs text-red-500">{errors.otherProjectType.message}</span>}
                                     </div>
                                 )}
 
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium">Description du Besoin</label>
+                                    <label className="text-sm font-medium">{t('cahier.form.desc')}</label>
                                     <textarea
                                         {...register("description", { required: "Requis" })}
                                         rows={4}
                                         className="w-full p-3 rounded-xl bg-accent/5 border border-transparent focus:border-accent focus:bg-background transition-all outline-none resize-none"
-                                        placeholder="Décrivez brièvement votre projet..."
+                                        placeholder={t('cahier.form.desc')}
                                     />
                                     {errors.description && <span className="text-xs text-red-500">{errors.description.message}</span>}
                                 </div>
 
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="space-y-2">
-                                        <label className="text-sm font-medium">Budget Estimé</label>
+                                        <label className="text-sm font-medium">{t('cahier.form.budget')}</label>
                                         <select
                                             {...register("budget")}
                                             className="w-full p-3 rounded-xl bg-accent/5 border border-transparent focus:border-accent focus:bg-background transition-all outline-none"
@@ -205,7 +205,7 @@ export const CahierDesCharges = () => {
                                         </select>
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-sm font-medium">Date début Souhaitée</label>
+                                        <label className="text-sm font-medium">{t('cahier.form.startDate')}</label>
                                         <input
                                             type="date"
                                             {...register("startDate")}
@@ -213,7 +213,7 @@ export const CahierDesCharges = () => {
                                         />
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-sm font-medium">Date Limite Souhaitée</label>
+                                        <label className="text-sm font-medium">{t('cahier.form.deadline')}</label>
                                         <input
                                             type="date"
                                             {...register("deadline")}
@@ -223,8 +223,8 @@ export const CahierDesCharges = () => {
                                 </div>
 
                                 <Button type="submit" disabled={isSubmitting} className="w-full rounded-xl py-6 text-lg font-bold shadow-lg mt-4">
-                                    {isSubmitting ? "Envoi en cours..." : (
-                                        <>Envoyer le Cahier des Charges <Send className="ml-2 h-4 w-4" /></>
+                                    {isSubmitting ? t('cahier.form.sending') : (
+                                        <>{t('cahier.form.submit')} <Send className="ml-2 h-4 w-4" /></>
                                     )}
                                 </Button>
                             </form>
@@ -243,15 +243,15 @@ export const CahierDesCharges = () => {
                         <div className="bg-background rounded-full p-4 shadow-lg animate-bounce">
                             <CheckCircle2 className="h-12 w-12 text-accent" />
                         </div>
-                        <DialogTitle className="text-2xl font-bold font-['Outfit'] text-primary">Reçu 5/5 !</DialogTitle>
+                        <DialogTitle className="text-2xl font-bold font-['Outfit'] text-primary">{t('cahier.form.success.title')}</DialogTitle>
                         <DialogDescription className="text-lg">
-                            Votre cahier des charges a bien été transmis à notre équipe.
+                            {t('cahier.form.success.desc')}
                         </DialogDescription>
                         <p className="text-muted-foreground">
-                            Nous allons l'analyser avec attention et revenir vers vous sous 24h ouvrées pour en discuter.
+                            {t('cahier.form.success.sub')}
                         </p>
                         <Button onClick={() => setShowSuccess(false)} className="rounded-xl px-8 w-full mt-4">
-                            Parfait, merci !
+                            {t('cahier.form.success.button')}
                         </Button>
                     </div>
                 </DialogContent>

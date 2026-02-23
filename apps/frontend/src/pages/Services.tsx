@@ -15,6 +15,8 @@ import { Button } from "@/components/ui/button";
 import { servicesData } from "@/data/servicesData";
 import { SEO } from "@/components/common/SEO";
 import { AdBanner } from "@/components/common/AdBanner";
+import { useTranslation } from "react-i18next";
+import { getLocalizedPath } from "@/lib/i18nUtils";
 
 const iconMap: Record<string, any> = {
     Megaphone,
@@ -27,7 +29,8 @@ const iconMap: Record<string, any> = {
 };
 
 export const Services = () => {
-    usePageTitle("Nos Services");
+    const { t } = useTranslation();
+    usePageTitle(t('services.title'));
 
     const servicesSchema = {
         "@context": "https://schema.org",
@@ -81,9 +84,9 @@ export const Services = () => {
     return (
         <div className="bg-background text-foreground overflow-hidden">
             <SEO
-                title="Nos Services - Développement Web, Mobile & Marketing Digital à Paris"
-                description="Découvrez nos services experts : création de sites web modernes, applications mobiles performantes et solutions d'intelligence artificielle sur-mesure pour votre entreprise."
-                keywords="services agence digitale, création site vitrine, développement e-commerce, app mobile dev paris, consultance IA, seo sea paris, webdesign"
+                title={t('services.title')}
+                description={t('services.description')}
+                keywords={t('services.keywords')}
                 schemaData={servicesSchema}
             />
             {/* Hero Section */}
@@ -91,13 +94,13 @@ export const Services = () => {
                 <div className="container mx-auto px-4 lg:px-8">
                     <div className="max-w-3xl mx-auto text-center">
                         <div className="inline-block px-4 py-1.5 mb-6 text-sm font-bold tracking-wider text-accent uppercase bg-accent/10 rounded-full">
-                            Nos Spécialités
+                            {t('services.hero.badge')}
                         </div>
                         <h1 className="text-5xl lg:text-7xl font-bold font-['Outfit'] leading-[1.1] mb-8 text-primary">
-                            Solutions Numériques <span className="text-accent underline decoration-accent/30 underline-offset-8">Sur-Mesure</span>
+                            {t('services.hero.title').split('v')[0]}<span className="text-accent underline decoration-accent/30 underline-offset-8">v</span>{t('services.hero.title').split('v')[1]}
                         </h1>
                         <p className="text-xl text-muted-foreground leading-relaxed">
-                            Découvrez notre gamme complète de services conçus pour propulser votre entreprise vers de nouveaux sommets de performance et d'innovation.
+                            {t('services.hero.desc')}
                         </p>
                     </div>
                 </div>
@@ -123,17 +126,17 @@ export const Services = () => {
                                             <IconComponent className="h-8 w-8" />
                                         </div>
                                         <h3 className="text-2xl lg:text-3xl font-bold mb-6 font-['Outfit'] text-primary group-hover:text-accent transition-colors">
-                                            {service.title}
+                                            {t(service.title)}
                                         </h3>
                                         <p className="text-lg text-muted-foreground leading-relaxed mb-10 flex-grow">
-                                            {service.shortDescription}
+                                            {t(service.shortDescription)}
                                         </p>
-                                        <Link to={`/services/${service.slug}`} className="mt-auto">
+                                        <Link to={getLocalizedPath(`/services/${service.slug}`)} className="mt-auto">
                                             <Button
                                                 variant="ghost"
                                                 className="p-0 text-accent font-bold text-lg hover:bg-transparent hover:text-accent/80 group/btn flex items-center gap-3 transition-all"
                                             >
-                                                Lire Plus
+                                                {t('services.grid.readMore')}
                                                 <ArrowRight className="h-5 w-5 transition-transform group-hover/btn:translate-x-2" />
                                             </Button>
                                         </Link>
@@ -151,13 +154,13 @@ export const Services = () => {
             {/* Bottom CTA */}
             <section className="py-24 bg-accent/5">
                 <div className="container mx-auto px-4 lg:px-8 text-center max-w-4xl">
-                    <h2 className="text-3xl lg:text-5xl font-bold font-['Outfit'] mb-8">Un projet spécifique en tête ?</h2>
+                    <h2 className="text-3xl lg:text-5xl font-bold font-['Outfit'] mb-8">{t('services.cta.title')}</h2>
                     <p className="text-xl text-muted-foreground mb-12 leading-relaxed">
-                        Nos experts sont prêts à relever vos défis technologiques les plus complexes. Contactez-nous pour une étude personnalisée.
+                        {t('services.cta.desc')}
                     </p>
-                    <Link to="/demande-de-devis">
+                    <Link to={getLocalizedPath("/demande-de-devis")}>
                         <Button size="lg" className="rounded-2xl px-12 h-16 text-lg font-bold shadow-premium-dark">
-                            Démarrer une collaboration
+                            {t('services.cta.button')}
                         </Button>
                     </Link>
                 </div>

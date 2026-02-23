@@ -1,0 +1,776 @@
+{
+    "nav": {
+        "home": "Home",
+        "services": "Services",
+        "services_all": "Explore all our technical services",
+        "expertise": "Expertise",
+        "news": "News",
+        "about": "About",
+        "contact": "Contact",
+        "requestQuote": "Request a Quote",
+        "logout": "Logout",
+        "viewAll": "View all",
+        "darkMode": "Dark Mode",
+        "language": "Language"
+    },
+    "common": {
+        "close": "Close"
+    },
+    "whatsapp": {
+        "text": "Chat with us"
+    },
+    "notfound": {
+        "title": "Page Not Found | NettmobInfotech",
+        "seoDescription": "Sorry, the page you are looking for does not exist or has been moved.",
+        "header": "404",
+        "subheader": "Oops! Page not found",
+        "description": "The page you are looking for seems to have been moved, deleted or never existed.",
+        "backHome": "Back to Home",
+        "ourServices": "Our Services"
+    },
+    "services": {
+        "title": "IT Services & Digital Transformation | NettmobInfotech",
+        "description": "Discover our excellent services in web development, mobile, digital marketing and AI solutions. Technical expertise at the service of your growth.",
+        "keywords": "IT services, web development, mobile apps, digital marketing, AI solutions, SEO audit, website creation",
+        "hero": {
+            "badge": "Digitalization & Innovation",
+            "title": "High Performance Services for your Visionary Projects",
+            "desc": "From design to maintenance, we support you with sharp technical expertise to transform your ideas into digital success."
+        },
+        "grid": {
+            "readMore": "Learn more"
+        },
+        "cta": {
+            "title": "Ready to launch your project?",
+            "desc": "Our team of experts is ready to meet your technical challenges and support you in your success.",
+            "button": "Request a free quote"
+        },
+        "detail": {
+            "back": "Back to services",
+            "featureTitle": "Why choose this service?",
+            "urgentTitle": "Urgent Need?",
+            "urgentDesc": "Do you have a project that needs immediate attention? Our experts are available to discuss it.",
+            "callUs": "Call us now"
+        }
+    },
+    "home": {
+        "title": "NettmobInfotech | Digital Agency & IT Solutions in Paris",
+        "hero": {
+            "title": "Innovative IT Solutions for your Success.",
+            "subtitle": "NettmobInfotech supports you in your digital transformation with cutting-edge services in web, mobile and digital marketing development.",
+            "startProject": "Start a Project",
+            "specifications": "Specifications",
+            "innovationTitle": "Innovation",
+            "innovationSubtitle": "Tailored Solutions"
+        },
+        "whyChooseUs": {
+            "title": "Why Choose Us?",
+            "subtitle": "Major assets that make a difference for your business.",
+            "expertise": "Expertise",
+            "expertiseDesc": "A qualified team mastering the latest technologies.",
+            "speed": "Speed",
+            "speedDesc": "Projects delivered on time, without compromising on quality.",
+            "listening": "Listening",
+            "listeningDesc": "A privileged customer relationship to understand your needs.",
+            "reliability": "Reliability",
+            "reliabilityDesc": "Robust, secure and maintainable solutions."
+        },
+        "partners": "They trust us",
+        "about": {
+            "badge": "Who We Are",
+            "title": "Nettmobinfotech your ideal partner",
+            "description": "At Nettmobinfotech, we are committed to providing a guarantee on our work to ensure your total satisfaction. We develop tailored solutions that boost your activity.",
+            "contactUs": "Contact Us"
+        },
+        "services": {
+            "title": "Our Excellence Services",
+            "subtitle": "Full expertise for all your technological needs.",
+            "discover": "Discover",
+            "s1": {
+                "title": "Digital Marketing",
+                "desc": "Nettmobinfotech offers a full range of digital marketing services to help businesses achieve their goals."
+            },
+            "s2": {
+                "title": "Website Creation",
+                "desc": "We offer a website creation service to meet the needs of all businesses."
+            },
+            "s3": {
+                "title": "Mobile Development",
+                "desc": "Creation of custom mobile applications for businesses and individuals."
+            },
+            "s4": {
+                "title": "Graphic Design",
+                "desc": "Modern and impactful visual identities for your brand."
+            }
+        },
+        "documentation": {
+            "badge": "Documentation",
+            "title": "Need help with your Specifications?",
+            "subtitle": "A well-defined specifications is the key to a successful project. Discover why and how we can help you structure it.",
+            "learnMore": "Learn More"
+        },
+        "process": {
+            "title": "Work Process",
+            "subtitle": "A proven method to guarantee the success of your project.",
+            "step": "Step",
+            "p1": "Analysis",
+            "p2": "Graphic Design",
+            "p3": "Development",
+            "p4": "Hosting",
+            "p5": "Maintenance"
+        },
+        "ai": {
+            "badge": "Artificial Intelligence",
+            "title": "Boost your Business with AI",
+            "description": "Harness the power of Artificial Intelligence to automate your processes, improve your customer relationship and create innovative experiences with our tailored chatbots and AI applications.",
+            "item1": "Tailored 24/7 AI Chatbots",
+            "item2": "Intelligent automation",
+            "item3": "Advanced conversational agents",
+            "item4": "LLM models integration",
+            "discoverButton": "Discover our AI Solutions"
+        },
+        "testimonials": {
+            "title": "What our clients say",
+            "subtitle": "Customer satisfaction is our top priority.",
+            "t1": {
+                "author": "Thomas Martin",
+                "role": "Marketing Director",
+                "text": "The follow-up throughout the creation of my application was exemplary. The team was 100% involved for a perfect result."
+            },
+            "t2": {
+                "author": "Jacques Dupont",
+                "role": "Entrepreneur",
+                "text": "Working with Nettmobinfotech for my online store was a pure pleasure. Impeccable stock management and top design."
+            },
+            "t3": {
+                "author": "Stéphane Moreau",
+                "role": "CEO TechStart",
+                "text": "They not only built our app, but also proposed crucial strategic improvements. Real added value."
+            },
+            "t4": {
+                "author": "Sophie Bernard",
+                "role": "Manager",
+                "text": "A website redesign that doubled our conversion rate in 3 months. The design is beautiful and ultra-fast."
+            },
+            "t5": {
+                "author": "Marc Dubois",
+                "role": "Restaurateur",
+                "text": "My online ordering system works like a charm. Thanks to the whole team for their patience and professionalism."
+            },
+            "t6": {
+                "author": "Élise Laurent",
+                "role": "Journalist",
+                "text": "Their SEO expertise allowed me to reach Google's first page in a few weeks. Impressive!"
+            }
+        },
+        "blog": {
+            "title": "Latest from the Blog",
+            "subtitle": "Stay informed of the latest trends.",
+            "viewAll": "View all articles",
+            "allArticles": "View all articles"
+        }
+    },
+    "welcome": {
+        "badge": "Welcome",
+        "title": "Welcome to",
+        "description": "Your trusted partner in web, mobile development and innovative digital solutions. We transform your ideas into reality with expertise and passion.",
+        "item1": "✨ Tailored solutions",
+        "item2": "🚀 Cutting-edge technologies",
+        "item3": "💼 Personalized support",
+        "discover": "Discover our services",
+        "close": "Close"
+    },
+    "footer": {
+        "slogan": "\"You think, we design\"",
+        "description": "Expert in developing innovative web solutions and digital transformation.",
+        "prestations": "Our Services",
+        "usefulLinks": "Useful Links",
+        "about": "About us",
+        "contactUs": "Contact us",
+        "specifications": "Specifications",
+        "privacy": "Privacy Policy",
+        "rgpd": "GDPR",
+        "contact": "Contact",
+        "address": "Address",
+        "phone": "Phone",
+        "email": "Email",
+        "rights": "All rights reserved.",
+        "poweredBy": "Powered by"
+    },
+    "about": {
+        "title": "About - NettmobInfotech Digital Agency in Paris",
+        "description": "Discover the story of NettmobInfotech. Experts in C#, .NET, PHP development and systems interoperability solutions with over 10 years of experience.",
+        "keywords": "software development expertise, web agency paris, c# .net developer, custom wordpress, business digitalization, tech team",
+        "hero": {
+            "badge": "Who we are?",
+            "title": "Experts in <span class='text-accent underline decoration-accent/30 underline-offset-8'>IT</span> Development",
+            "desc": "Nettmobinfotech is an IT development company located in France and operating throughout Europe. We offer exceptional value for money and permanent support at every stage of your project.",
+            "startProject": "Start a project",
+            "viewExpertise": "View our expertise"
+        },
+        "stats": {
+            "experience": "Years of Experience",
+            "projects": "Completed Projects",
+            "clients": "Satisfied Clients",
+            "languages": "Mastered Languages"
+        },
+        "mission": {
+            "title": "Our Mission",
+            "p1": "Provide innovative and reliable IT solutions that meet our clients' specific needs, contributing to their growth and success in a digital world.",
+            "p2": "We are committed to providing top-level technical expertise while staying close to our partners."
+        },
+        "vision": {
+            "title": "Our Vision",
+            "desc": "Become the preferred IT partner for businesses by offering cutting-edge solutions and service excellence operating throughout Europe."
+        },
+        "values": {
+            "title": "Our Core Values",
+            "innovation": {
+                "title": "Innovation",
+                "desc": "We stay at the forefront of technology to offer modern solutions."
+            },
+            "quality": {
+                "title": "Quality",
+                "desc": "Technical excellence is at the heart of every line of code we write."
+            },
+            "collaboration": {
+                "title": "Collaboration",
+                "desc": "We work hand in hand with you to ensure the success of your projects."
+            }
+        },
+        "methodology": {
+            "title": "Our Methodology",
+            "desc": "A structured and transparent approach to ensure exceptional results."
+        },
+        "steps": {
+            "s1": {
+                "title": "Analysis",
+                "desc": "Deep understanding of your needs and business objectives."
+            },
+            "s2": {
+                "title": "Design",
+                "desc": "Development of the technical architecture and UI/UX design."
+            },
+            "s3": {
+                "title": "Development",
+                "desc": "Agile coding with rigorous testing and permanent monitoring."
+            },
+            "s4": {
+                "title": "Deployment",
+                "desc": "Secure production launch and post-launch support."
+            }
+        },
+        "cta": {
+            "title": "Ready to digitalize your business?",
+            "subtitle": "Receive a free and personalized quote for your IT development project.",
+            "button": "Request a Quote"
+        }
+    },
+    "contact": {
+        "title": "Contact - NettmobInfotech",
+        "description": "Contact NettmobInfotech to discuss your web or mobile project. Free quote within 24 hours. Located at 10 Rue du Colisée, 75008 Paris.",
+        "keywords": "contact web agency paris, app development quote, digital consultant appointment, seo agency paris 8, it technical support",
+        "hero": {
+            "title": "Contact Us",
+            "desc": "An idea? A project? Our team is ready to support you in your digital transformation."
+        },
+        "info": {
+            "address": {
+                "title": "Our Address",
+                "detail": "10 Rue du Colisée, 75008 Paris"
+            },
+            "phone": {
+                "title": "Phone",
+                "detail": "+33 7 66 39 09 92"
+            },
+            "email": {
+                "title": "Email",
+                "detail": "contact@nettmobinfotech.fr"
+            }
+        },
+        "form": {
+            "firstName": "First Name",
+            "lastName": "Last Name",
+            "email": "Email",
+            "phone": "Phone",
+            "subject": "Subject",
+            "message": "Message",
+            "firstNamePlaceholder": "Your first name",
+            "lastNamePlaceholder": "Your last name",
+            "emailPlaceholder": "your@email.com",
+            "phonePlaceholder": "Phone number",
+            "subjectPlaceholder": "Subject of your message",
+            "messagePlaceholder": "How can we help you?",
+            "submit": "Send Message",
+            "send": "Send Message",
+            "sending": "Sending...",
+            "error": "Error while sending the message."
+        },
+        "success": {
+            "title": "Message Sent !",
+            "desc": "Your message has been received. Our team will contact you as soon as possible."
+        }
+    },
+    "expertise": {
+        "title": "Our Expertise - Technologies & Skills | NettmobInfotech",
+        "description": "Discover our expertise in web, mobile and IA development. Mastering React, Node.js, TypeScript, Flutter and cutting-edge technologies. Powerful and secure solutions.",
+        "keywords": "React, Node.js, TypeScript, Flutter, web technologies, technical expertise, fullstack development, MySQL, Docker, Next.js",
+        "hero": {
+            "badge": "Know-How & Innovation",
+            "title": "Technical Expertise at the service of your <span class='text-accent'>Growth</span>",
+            "desc": "We combine creativity, strategy and technical excellence to develop tailored digital solutions that propel your business."
+        },
+        "core": {
+            "title": "Core Competencies",
+            "web": {
+                "title": "Web Development",
+                "desc": "Showcase sites, e-commerce and complex web applications. We create high-performance and responsive online experiences.",
+                "f1": "Showcase & Institutional Sites",
+                "f2": "E-commerce (WooCommerce, Shopify)",
+                "f3": "Web Applications (React, Vue)",
+                "f4": "API & Third-party integration"
+            },
+            "mobile": {
+                "title": "Mobile Applications",
+                "desc": "Transform your ideas into native or hybrid iOS and Android applications, designed for a smooth user experience.",
+                "f1": "iOS & Android (React Native, Flutter)",
+                "f2": "Mobile First UX/UI",
+                "f3": "Performance & Fluidity",
+                "f4": "Stores Publishing"
+            },
+            "marketing": {
+                "title": "Digital Marketing & SEO",
+                "desc": "Maximize your online visibility and attract more customers through our data-driven marketing strategies.",
+                "f1": "SEO Audit & Strategy",
+                "f2": "Online Advertising (Ads)",
+                "f3": "Social Media Management",
+                "f4": "Content Marketing"
+            },
+            "security": {
+                "title": "Infrastructure & Security",
+                "desc": "Ensure the availability and security of your data with our robust hosting and maintenance solutions.",
+                "f1": "Secure Cloud Hosting",
+                "f2": "Preventive Maintenance",
+                "f3": "Automatic Backups",
+                "f4": "GDPR Compliance"
+            }
+        },
+        "tech": {
+            "title": "Mastered Technologies"
+        },
+        "approach": {
+            "title": "Our \"One-Stop Shop\" Approach",
+            "p1": "At NettmobInfotech, we believe in a holistic approach. We don't just deliver code, but a complete solution that integrates strategy, design, development and maintenance.",
+            "p2": "Our philosophy is simple: understand your business to build the digital tool that perfectly fits you, without technical superfluity.",
+            "perf": {
+                "title": "Performance",
+                "desc": "Optimized and fast solutions."
+            },
+            "sec": {
+                "title": "Security",
+                "desc": "Data protection by design."
+            }
+        },
+        "cta": {
+            "title": "Ready to realize your project?",
+            "desc": "Let's discuss your needs and see how our expertise can help you achieve your goals.",
+            "button": "Let's talk about your project"
+        }
+    },
+    "services_data": {
+        "marketing": {
+            "title": "Digital Marketing",
+            "short": "A full range of services to achieve your online business goals.",
+            "detailTitle": "Strategic Digital Marketing",
+            "detailDesc": "Nettmobinfotech supports you in creating and executing a powerful marketing strategy.",
+            "f1": "Custom digital audit and strategy",
+            "f2": "Ad campaign management",
+            "f3": "Email marketing and automation",
+            "f4": "Data analysis"
+        },
+        "web": {
+            "title": "Website Creation",
+            "short": "High performance showcase and ecommerce sites, optimized for conversion.",
+            "detailTitle": "Web Design & Development",
+            "detailDesc": "We create unique websites that reflect your brand identity.",
+            "f1": "Responsive and modern design",
+            "f2": "SEO-friendly architecture",
+            "f3": "Ecommerce solutions",
+            "f4": "Advanced functionality integration"
+        },
+        "mobile": {
+            "title": "Mobile App Development",
+            "short": "Innovative iOS and Android apps to boost your efficiency.",
+            "detailTitle": "Custom Mobile Applications",
+            "detailDesc": "We develop robust and intuitive mobile applications.",
+            "f1": "Native and cross-platform development",
+            "f2": "User-centered UI/UX design",
+            "f3": "Store publishing and management",
+            "f4": "Evolutionary maintenance"
+        },
+        "seo": {
+            "title": "Search Engine Optimization (SEO)",
+            "short": "Boost your organic visibility and attract qualified traffic sustainably.",
+            "detailTitle": "Search Engine Optimization",
+            "detailDesc": "Our SEO expertise allows you to climb in search results.",
+            "f1": "Complete technical SEO audit",
+            "f2": "Semantic optimization",
+            "f3": "High-quality Link building",
+            "f4": "Performance tracking"
+        },
+        "content": {
+            "title": "Content Creation",
+            "short": "Engaging and strategic content to captivate your audience.",
+            "detailTitle": "Content Strategy & Storytelling",
+            "detailDesc": "We produce high-quality content that informs and inspires.",
+            "f1": "Blog post writing",
+            "f2": "Visual and animation creation",
+            "f3": "Copywriting",
+            "f4": "Social media strategy"
+        },
+        "graphic": {
+            "title": "Graphic Design",
+            "short": "Impactful visual identities that make a mark.",
+            "detailTitle": "Graphic Design & Branding",
+            "detailDesc": "We create strong and consistent visual universes.",
+            "f1": "Logo creation",
+            "f2": "Marketing material design",
+            "f3": "Custom illustrations",
+            "f4": "Social media designs"
+        },
+        "ai": {
+            "title": "AI Solutions (Apps & Chatbots)",
+            "short": "Integrate the power of Artificial Intelligence to automate and innovate.",
+            "detailTitle": "Artificial Intelligence & Automation",
+            "detailDesc": "Exploit the latest advances in AI to transform your processes.",
+            "f1": "Custom AI Chatbots",
+            "f2": "Process automation",
+            "f3": "Intelligent conversational agents",
+            "f4": "LLM model integration"
+        }
+    },
+    "blog": {
+        "title": "Blog & News",
+        "description": "Follow our latest articles on AI, web development, and digital marketing trends.",
+        "keywords": "tech blog, AI news, web development tips, digital trends 2026, marketing automation, digital agency blog",
+        "hero": {
+            "badge": "Our News",
+            "title": "Blog & News",
+            "subtitle": "Follow our latest innovations, expert advice, and digital world news."
+        },
+        "grid": {
+            "readMore": "Read more"
+        },
+        "pagination": {
+            "prev": "Previous",
+            "next": "Next",
+            "pageOf": "Page {{current}} of {{total}}"
+        },
+        "detail": {
+            "back": "Back to News",
+            "share": "Share this article",
+            "useful": "Was this article helpful?",
+            "thanks": "Thank you for your feedback!",
+            "yes": "Yes 😊",
+            "no": "No ☹️",
+            "usefulCount": "{{count}} found this useful",
+            "notUsefulCount": "{{count}} did not find this useful",
+            "notFound": "Article not found",
+            "copyLink": "Link copied! You can now share it on Instagram."
+        }
+    },
+    "privacy": {
+        "title": "Privacy Policy | NettmobInfotech",
+        "description": "Privacy policy of NettmobInfotech. Learn how we protect your data and respect your privacy.",
+        "keywords": "privacy, cookies, user data, security, GDPR",
+        "hero": {
+            "title": "Privacy Policy",
+            "subtitle": "Your privacy is important to us",
+            "lastUpdate": "Last updated: {{date}}"
+        },
+        "intro": {
+            "title": "Introduction",
+            "p1": "NettmobInfotech, located at 10 Rue du Colisée, 75008 Paris, France, attaches great importance to the protection of your personal data.",
+            "p2": "This privacy policy explains how we collect, use, store and protect your personal information when you use our services."
+        },
+        "collected": {
+            "title": "Data Collected",
+            "desc": "We collect only the data necessary to provide you with our services and respond to your requests.",
+            "quote": {
+                "title": "Quote Form",
+                "item1": "First and last name",
+                "item2": "Professional email",
+                "item3": "Phone number",
+                "item4": "Company information",
+                "item5": "Project description"
+            },
+            "cahier": {
+                "title": "Project Specifications Form",
+                "item1": "Company name",
+                "item2": "Contact name",
+                "item3": "Email and Phone",
+                "item4": "Project type",
+                "item5": "Detailed description of the need",
+                "item6": "Estimated budget",
+                "item7": "Desired timeline"
+            }
+        },
+        "purpose": {
+            "title": "Use of Data",
+            "desc": "Your data is processed for the following purposes:",
+            "item1": "Processing your quote requests",
+            "item2": "Analyzing your project specifications",
+            "item3": "Customer relationship management",
+            "item4": "Improving our services",
+            "item5": "Sending commercial information (if consented)"
+        },
+        "legal": {
+            "title": "Legal Basis",
+            "desc": "The processing of your data is based on:",
+            "item1": {
+                "label": "Consent",
+                "value": "that you give when sending a form."
+            },
+            "item2": {
+                "label": "Execution of a contract",
+                "value": "or pre-contractual measures."
+            },
+            "item3": {
+                "label": "Our legitimate interest",
+                "value": "in ensuring the proper functioning of our service."
+            }
+        },
+        "retention": {
+            "title": "Retention",
+            "p1": "We keep your personal data for the duration necessary to achieve the purposes for which they were collected.",
+            "p2": "Contact data for prospects are kept for a maximum of 3 years after the last contact. Customer data are kept for the duration of the contractual relationship, increased by legal prescription periods."
+        },
+        "security": {
+            "title": "Security",
+            "desc": "We implement rigorous security measures to protect your data against unauthorized access:",
+            "item1": "HTTPS (SSL) protocol on the entire site",
+            "item2": "Secure storage of databases",
+            "item3": "Restricted data access to authorized persons only",
+            "item4": "Regular backups"
+        },
+        "rights_top": {
+            "title": "Your Rights",
+            "desc": "In accordance with GDPR, you have the following rights:",
+            "access": {
+                "title": "Access",
+                "desc": "Know what data we hold about you."
+            },
+            "rectification": {
+                "title": "Rectification",
+                "desc": "Modify your inaccurate data."
+            },
+            "erasure": {
+                "title": "Erasure",
+                "desc": "Request the deletion of your data."
+            },
+            "opposition": {
+                "title": "Opposition",
+                "desc": "Object to the processing of your data."
+            }
+        },
+        "contact": {
+            "title": "Exercise Your Rights",
+            "p1": "To exercise your rights or for any questions related to the protection of your personal data, you can contact us:",
+            "email": "By email",
+            "mail": "By post",
+            "address": "NettmobInfotech - Data Protection\n10 Rue du Colisée, 75008 Paris, France",
+            "complaint": "You also have the right to lodge a complaint with the CNIL."
+        },
+        "cta": "Contact us"
+    },
+    "rgpd": {
+        "title": "GDPR & Data Protection | NettmobInfotech",
+        "description": "Our GDPR policy and personal data protection. Full transparency on the processing of your information.",
+        "keywords": "GDPR, data protection, privacy, compliance, personal data, security",
+        "hero": {
+            "title": "GDPR & Data Protection",
+            "subtitle": "Our commitment to the protection of your personal data"
+        },
+        "what": {
+            "title": "What is GDPR?",
+            "p1": "The General Data Protection Regulation (GDPR) is a European regulatory text that frames data processing equally throughout the European Union territory.",
+            "p2": "At NettmobInfotech, we consider that the protection of your data is not only a legal obligation, but a guarantee of trust for our users."
+        },
+        "responsible": {
+            "title": "Data Controller",
+            "email": "Email",
+            "phone": "Phone"
+        },
+        "rights_detail": {
+            "title": "Your Rights in Detail",
+            "desc": "In accordance with regulations, you have several rights regarding your personal data."
+        },
+        "rights": {
+            "access": {
+                "title": "Right of Access",
+                "desc": "You can obtain confirmation that your data is being processed and obtain a copy."
+            },
+            "rectification": {
+                "title": "Right to Rectification",
+                "desc": "You can request the correction of inaccurate or incomplete data."
+            },
+            "erasure": {
+                "title": "Right to Erasure",
+                "desc": "You can request the deletion of your data under certain conditions."
+            },
+            "limitation": {
+                "title": "Right to Limitation",
+                "desc": "You can request the temporary freezing of the use of some of your data."
+            },
+            "portability": {
+                "title": "Right to Portability",
+                "desc": "You can request to retrieve your data to transmit them to another controller."
+            },
+            "opposition": {
+                "title": "Right to Object",
+                "desc": "You can object at any time to the processing of your data for specific reasons."
+            }
+        },
+        "legal_basis": {
+            "title": "Legal Basis for Processing",
+            "desc": "We only collect your data if we have a legal basis to do so:"
+        },
+        "basis": {
+            "consent": {
+                "title": "Consent",
+                "desc": "You have given your explicit agreement (e.g., contact form)."
+            },
+            "contract": {
+                "title": "Execution of a contract",
+                "desc": "Processing is necessary to provide you with the requested service."
+            },
+            "interest": {
+                "title": "Legitimate interest",
+                "desc": "Processing is necessary for the management of our activity while respecting your rights."
+            }
+        },
+        "retention": {
+            "title": "Retention Period",
+            "desc": "We keep your data only for the time necessary for the purposes for which they were collected:",
+            "prospects": {
+                "label": "Prospects",
+                "value": "3 years from the last contact"
+            },
+            "clients": {
+                "label": "Clients",
+                "value": "Duration of the contractual relationship plus 5 years (legal obligations)"
+            },
+            "connection": {
+                "label": "Connection data",
+                "value": "12 months"
+            }
+        },
+        "security": {
+            "title": "Data Security",
+            "desc": "We implement appropriate technical and organizational measures to protect your data:",
+            "encryption": {
+                "title": "Encryption",
+                "desc": "Use of HTTPS/TLS protocol throughout the site."
+            },
+            "access": {
+                "title": "Access Control",
+                "desc": "Restricted access to authorized persons only."
+            },
+            "backup": {
+                "title": "Backups",
+                "desc": "Regular backups to prevent any data loss."
+            },
+            "monitoring": {
+                "title": "Monitoring",
+                "desc": "Continuous monitoring to detect any intrusion."
+            }
+        },
+        "transfer": {
+            "title": "Data Transfer",
+            "desc": "Your personal data are stored on secure servers located in the European Union (France). No transfer outside the EU is carried out without appropriate guarantees."
+        },
+        "breach": {
+            "title": "Data Breach",
+            "desc": "In accordance with Article 33 of the GDPR, in the event of a personal data breach likely to result in a high risk to your rights and freedoms, we will inform you as soon as possible and notify the CNIL within 72 hours."
+        },
+        "exercise": {
+            "title": "How to Exercise Your Rights?",
+            "desc": "To exercise one of your rights, you can contact us by:",
+            "email": {
+                "label": "Email",
+                "subject": "Subject: \"Exercise of my GDPR rights\""
+            },
+            "post": {
+                "label": "Postal mail",
+                "address": "NettmobInfotech - Data Protection Service\n10 Rue du Colisée\n75008 Paris, France"
+            },
+            "delay": "Response time: We commit to responding to your request within one month of receipt. This period may be extended by two months in case of complexity or a large number of requests.",
+            "id": "Supporting documents: For security reasons, we may ask you to prove your identity by providing us with a copy of an identity document."
+        },
+        "complaint": {
+            "title": "Right to Lodge a Complaint with the CNIL",
+            "desc": "If you feel that your rights are not being respected, you have the right to lodge a complaint with the Commission Nationale de l'Informatique and des Libertés (CNIL):",
+            "phone": "Phone"
+        }
+    },
+    "quote": {
+        "title": "Request a Free Quote - NettmobInfotech",
+        "description": "Get a free and personalized quote for your web, mobile or digital marketing project. Response within 24 hours.",
+        "hero": {
+            "badge": "Propel your Vision",
+            "title": "Let's Talk About your <span class='text-accent'>Project</span>",
+            "desc": "From idea to technological reality. Get custom expertise and a precise quote within 24 hours."
+        },
+        "form": {
+            "firstName": "First Name",
+            "lastName": "Last Name",
+            "email": "Professional Email",
+            "phone": "Phone",
+            "company": "Company Name (If applicable)",
+            "services": "Which services are you interested in?",
+            "budget": "Your Estimated Budget",
+            "budgetPlaceholder": "Choose a range",
+            "timeline": "Desired Timeline",
+            "timelinePlaceholder": "What is your timing?",
+            "details": "Additional Notes (Optional)",
+            "detailsPlaceholder": "Tell us more about your project, your goals...",
+            "submit": "Get my Free Quote",
+            "disclaimer": "We work for a fixed price: commitment to results and firm price.",
+            "success": {
+                "title": "Thank you!",
+                "desc": "Your quote request has been sent successfully. Our team will contact you within 24 hours to discuss your project.",
+                "button": "Back to Home"
+            }
+        },
+        "trust": "\"We will contact you to understand your needs and refine this estimate in the form of a detailed quote.\""
+    },
+    "cahier": {
+        "title": "Project Specifications - NettmobInfotech",
+        "hero": {
+            "badge": "Project Guide",
+            "title": "Project Specifications",
+            "desc": "The key piece to guarantee the success of your digital project. A clear vision for a result that meets your expectations."
+        },
+        "form": {
+            "title": "Submit your Project Specifications",
+            "company": "Company Name",
+            "contact": "Contact Name",
+            "email": "Email",
+            "phone": "Phone",
+            "type": "Project Type",
+            "typeOther": "Specify project type",
+            "desc": "Requirement Description",
+            "budget": "Estimated Budget",
+            "startDate": "Desired Start Date",
+            "deadline": "Desired Deadline",
+            "submit": "Send Project Specifications",
+            "sending": "Sending in progress...",
+            "success": {
+                "title": "Received 5/5!",
+                "desc": "Your project specifications have been successfully sent to our team.",
+                "sub": "We will analyze it carefully and get back to you within 24 business hours to discuss it.",
+                "button": "Perfect, thanks!"
+            }
+        }
+    }
+}

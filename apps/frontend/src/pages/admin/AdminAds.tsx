@@ -16,11 +16,19 @@ interface Ad {
     title: string;
     description: string;
     imageUrl: string;
-    buttonText: string;
     buttonUrl: string;
     format: AdFormat;
     pages: AdPage[];
     isActive: boolean;
+    title_en?: string;
+    description_en?: string;
+    buttonText_en?: string;
+    title_es?: string;
+    description_es?: string;
+    buttonText_es?: string;
+    title_de?: string;
+    description_de?: string;
+    buttonText_de?: string;
     createdAt: string;
 }
 
@@ -57,6 +65,15 @@ const emptyForm = {
     format: "rectangle" as AdFormat,
     pages: [] as AdPage[],
     isActive: true,
+    title_en: "",
+    description_en: "",
+    buttonText_en: "Learn more",
+    title_es: "",
+    description_es: "",
+    buttonText_es: "Saber más",
+    title_de: "",
+    description_de: "",
+    buttonText_de: "Mehr erfahren",
 };
 
 export const AdminAds = () => {
@@ -66,6 +83,9 @@ export const AdminAds = () => {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [editingAd, setEditingAd] = useState<Ad | null>(null);
     const [formData, setFormData] = useState({ ...emptyForm });
+
+    const [activeLang, setActiveLang] = useState<'fr' | 'en' | 'es' | 'de'>('fr');
+    const [isTranslating, setIsTranslating] = useState(false);
 
     useEffect(() => { fetchAds(); }, []);
 
@@ -93,11 +113,21 @@ export const AdminAds = () => {
                 format: ad.format,
                 pages: ad.pages || [],
                 isActive: ad.isActive,
+                title_en: ad.title_en || "",
+                description_en: ad.description_en || "",
+                buttonText_en: ad.buttonText_en || "",
+                title_es: ad.title_es || "",
+                description_es: ad.description_es || "",
+                buttonText_es: ad.buttonText_es || "",
+                title_de: ad.title_de || "",
+                description_de: ad.description_de || "",
+                buttonText_de: ad.buttonText_de || ""
             });
         } else {
             setEditingAd(null);
             setFormData({ ...emptyForm });
         }
+        setActiveLang('fr');
         setIsDialogOpen(true);
     };
 
@@ -156,6 +186,54 @@ export const AdminAds = () => {
             ? formData.pages.filter(p => p !== page)
             : [...formData.pages, page];
         setFormData({ ...formData, pages });
+    };
+
+    const handleAutoTranslate = async () => {
+        if (!formData.title) {
+            toast.error("Veuillez d'abord remplir le titre en français.");
+            return;
+        }
+
+        setIsTranslating(true);
+        const toastId = toast.loading("Traduction automatique en cours...");
+
+        try {
+            const langs = ['en', 'es', 'de'];
+            const newFormData: any = { ...formData };
+
+            for (const lang of langs) {
+                // Translate Title
+                const titleRes = await api.post("/blog/translate", { text: formData.title, targetLang: lang });
+                if (lang === 'en') newFormData.title_en = titleRes.data.translatedText;
+                if (lang === 'es') newFormData.title_es = titleRes.data.translatedText;
+                if (lang === 'de') newFormData.title_de = titleRes.data.translatedText;
+
+                // Translate Description
+                if (formData.description) {
+                    const descRes = await api.post("/blog/translate", { text: formData.description, targetLang: lang });
+                    if (lang === 'en') newFormData.description_en = descRes.data.translatedText;
+                    if (lang === 'es') newFormData.description_es = descRes.data.translatedText;
+                    if (lang === 'de') newFormData.description_de = descRes.data.translatedText;
+                }
+
+                // Translate Button text
+                if (formData.buttonText) {
+                    const btnRes = await api.post("/blog/translate", { text: formData.buttonText, targetLang: lang });
+                    if (lang === 'en') newFormData.buttonText_en = btnRes.data.translatedText;
+                    if (lang === 'es') newFormData.buttonText_es = btnRes.data.translatedText;
+                    if (lang === 'de') newFormData.buttonText_de = btnRes.data.translatedText;
+                }
+            }
+
+            setFormData(newFormData);
+            toast.success("Traduction terminée !", { id: toastId });
+            setActiveLang('en');
+        } catch (error) {
+            console.error("Erreur de traduction:", error);
+            toast.error("Erreur lors de la traduction.", { id: toastId });
+        } finally {
+            setIsTranslating(false);
+        }
     };
 
     const filtered = ads.filter(a =>
@@ -292,19 +370,65 @@ export const AdminAds = () => {
                         </DialogDescription>
                     </DialogHeader>
 
+                    {/* Language Tabs */}
+                    <div className="flex items-center gap-1 border-b border-border/50 sticky top-0 bg-background/95 backdrop-blur-md z-10 pt-2 px-2">
+                        {[
+                            { id: 'fr', label: '🇫🇷 Français (Défaut)' },
+                            { id: 'en', label: '🇬🇧 Anglais' },
+                            { id: 'es', label: '🇪🇸 Espagnol' },
+                            { id: 'de', label: '🇩🇪 Allemand' }
+                        ].map((lang) => (
+                            <button
+                                key={lang.id}
+                                onClick={() => setActiveLang(lang.id as any)}
+                                className={`px-4 py-2.5 text-sm font-bold border-b-2 transition-colors whitespace-nowrap ${activeLang === lang.id
+                                    ? 'border-accent text-accent bg-accent/5 rounded-t-xl'
+                                    : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-t-xl'
+                                    }`}
+                            >
+                                {lang.label}
+                            </button>
+                        ))}
+                        <div className="flex-1" />
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={handleAutoTranslate}
+                            disabled={isTranslating}
+                            className="bg-accent/10 hover:bg-accent hover:text-white border-accent/20 text-accent transition-all shrink-0 font-bold rounded-xl shadow-inner mb-2"
+                        >
+                            {isTranslating ? (
+                                <div className="h-4 w-4 border-2 border-current border-t-transparent rounded-full animate-spin mr-2" />
+                            ) : (
+                                "✨ Auto-Traduire"
+                            )}
+                        </Button>
+                    </div>
+
                     <div className="space-y-5 py-4 px-2">
                         {/* Title */}
                         <div className="space-y-2">
-                            <label className="text-sm font-bold">Titre *</label>
-                            <Input value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} className="rounded-2xl h-12 bg-muted/50 border-border/50" placeholder="Titre accrocheur..." />
+                            <label className="text-sm font-bold">Titre {activeLang.toUpperCase()} {activeLang === 'fr' && '*'}</label>
+                            <Input
+                                value={activeLang === 'fr' ? formData.title : (formData as any)[`title_${activeLang}`]}
+                                onChange={e => {
+                                    if (activeLang === 'fr') setFormData({ ...formData, title: e.target.value });
+                                    else setFormData({ ...formData, [`title_${activeLang}`]: e.target.value });
+                                }}
+                                className="rounded-2xl h-12 bg-muted/50 border-border/50"
+                                placeholder="Titre accocheur..."
+                            />
                         </div>
 
                         {/* Description */}
                         <div className="space-y-2">
-                            <label className="text-sm font-bold">Description</label>
+                            <label className="text-sm font-bold">Description {activeLang.toUpperCase()}</label>
                             <textarea
-                                value={formData.description}
-                                onChange={e => setFormData({ ...formData, description: e.target.value })}
+                                value={activeLang === 'fr' ? formData.description : (formData as any)[`description_${activeLang}`]}
+                                onChange={e => {
+                                    if (activeLang === 'fr') setFormData({ ...formData, description: e.target.value });
+                                    else setFormData({ ...formData, [`description_${activeLang}`]: e.target.value });
+                                }}
                                 className="w-full rounded-2xl p-3 bg-muted/50 border border-border/50 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-accent"
                                 rows={3}
                                 placeholder="Description courte et percutante..."
@@ -329,8 +453,16 @@ export const AdminAds = () => {
                         {/* Button */}
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-2">
-                                <label className="text-sm font-bold">Texte du bouton</label>
-                                <Input value={formData.buttonText} onChange={e => setFormData({ ...formData, buttonText: e.target.value })} className="rounded-2xl h-12 bg-muted/50 border-border/50" placeholder="En savoir plus" />
+                                <label className="text-sm font-bold">Texte du bouton {activeLang.toUpperCase()}</label>
+                                <Input
+                                    value={activeLang === 'fr' ? formData.buttonText : (formData as any)[`buttonText_${activeLang}`]}
+                                    onChange={e => {
+                                        if (activeLang === 'fr') setFormData({ ...formData, buttonText: e.target.value });
+                                        else setFormData({ ...formData, [`buttonText_${activeLang}`]: e.target.value });
+                                    }}
+                                    className="rounded-2xl h-12 bg-muted/50 border-border/50"
+                                    placeholder="En savoir plus"
+                                />
                             </div>
                             <div className="space-y-2">
                                 <label className="text-sm font-bold">URL du bouton</label>

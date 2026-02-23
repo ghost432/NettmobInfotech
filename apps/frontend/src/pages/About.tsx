@@ -1,280 +1,198 @@
-import { usePageTitle } from "@/hooks/usePageTitle";
-import { Card, CardContent } from "@/components/ui/card";
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+import {
+    Rocket,
+    Brain,
+    Users,
+    Globe,
+    Trophy,
+    Target
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ShieldCheck, Zap, Globe, Cpu, Layers, MousePointer2, Code2, Database } from "lucide-react";
-import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { usePageTitle } from "@/hooks/usePageTitle";
 import { SEO } from "@/components/common/SEO";
+import { getLocalizedPath } from "@/lib/i18nUtils";
 
 export const About = () => {
-    usePageTitle("À Propos");
-    const [activeTab, setActiveTab] = useState(0);
+    const { t } = useTranslation();
+    usePageTitle(t('about.title'));
 
-    const specialties = [
+    const stats = [
+        { label: t('about.stats.experience'), value: "10+", icon: Trophy },
+        { label: t('about.stats.projects'), value: "150+", icon: Rocket },
+        { label: t('about.stats.clients'), value: "100+", icon: Users },
+        { label: t('about.stats.languages'), value: "4", icon: Globe }
+    ];
+
+    const values = [
         {
-            id: "01",
-            title: "Langages & CMS",
-            subtitle: "Compétences & Expertises",
-            description: "Nous maîtrisons les langages de pointe pour des solutions robustes.",
-            items: ["Développement C# .NET, PHP, JS...", "WordPress et Prestashop sur-mesure", "Solutions e-commerce évolutives"],
-            icon: <Code2 className="h-6 w-6" />,
-            image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1470&auto=format&fit=crop"
+            title: t('about.values.innovation.title'),
+            desc: t('about.values.innovation.desc'),
+            icon: Brain,
+            color: "text-blue-500",
+            bg: "bg-blue-500/10"
         },
         {
-            id: "02",
-            title: "Accompagnement",
-            subtitle: "Digitalisation & Interopérabilité",
-            description: "Un suivi permanent tout au long du processus de programmation.",
-            items: ["Digitalisation des processus métier", "Interopérabilité des systèmes", "Accompagnement abordable et flexible"],
-            icon: <Layers className="h-6 w-6" />,
-            image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1470&auto=format&fit=crop"
+            title: t('about.values.quality.title'),
+            desc: t('about.values.quality.desc'),
+            icon: Target,
+            color: "text-emerald-500",
+            bg: "bg-emerald-500/10"
         },
         {
-            id: "03",
-            title: "Spécialités",
-            subtitle: "Solutions Flexibles",
-            description: "Nous nous engageons sur la transparence et la flexibilité.",
-            items: ["Transparence totale des étapes", "Enseignements techniques partagés", "Adaptabilité aux besoins changeants"],
-            icon: <Zap className="h-6 w-6" />,
-            image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1470&auto=format&fit=crop"
-        },
-        {
-            id: "04",
-            title: "Bases de Données",
-            subtitle: "SQL & NoSQL",
-            description: "Gestion performante et sécurisée de vos données.",
-            items: ["MySQL & PostgreSQL", "MongoDB (NoSQL)", "Optimisation de requêtes"],
-            icon: <Database className="h-6 w-6" />,
-            image: "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?q=80&w=1470&auto=format&fit=crop"
+            title: t('about.values.collaboration.title'),
+            desc: t('about.values.collaboration.desc'),
+            icon: Users,
+            color: "text-amber-500",
+            bg: "bg-amber-500/10"
         }
     ];
 
-    const aboutSchema = {
-        "@context": "https://schema.org",
-        "@type": "AboutPage",
-        "mainEntity": {
-            "@type": "Organization",
-            "name": "NettmobInfotech",
-            "description": "NettmobInfotech est une agence digitale spécialisée dans l'accompagnement des entreprises pour leur transformation numérique.",
-            "foundingDate": "2014",
-            "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "Paris",
-                "addressCountry": "FR"
-            }
-        }
-    };
+    const steps = [
+        { title: t('about.steps.s1.title'), desc: t('about.steps.s1.desc') },
+        { title: t('about.steps.s2.title'), desc: t('about.steps.s2.desc') },
+        { title: t('about.steps.s3.title'), desc: t('about.steps.s3.desc') },
+        { title: t('about.steps.s4.title'), desc: t('about.steps.s4.desc') }
+    ];
 
     return (
-        <div className="bg-background text-foreground overflow-hidden">
+        <div className="min-h-screen pb-20">
             <SEO
-                title="À Propos de NettmobInfotech - Agence de Développement à Paris"
-                description="Découvrez l'histoire de NettmobInfotech. Experts en développement C#, .NET, PHP et solutions d'interopérabilité systèmes avec plus de 10 ans d'expérience."
-                keywords="expertise développement informatique, agence web paris, développeur c# .net, wordpress sur mesure, digitalisation entreprise, équipe tech"
-                schemaData={aboutSchema}
+                title={t('about.title')}
+                description={t('about.description')}
+                keywords={t('about.keywords')}
             />
+
             {/* Hero Section */}
-            <section className="relative pt-8 pb-10 lg:pt-12 lg:pb-16">
-                <div className="container mx-auto px-4 lg:px-8">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                        <div className="max-w-2xl animate-in fade-in slide-in-from-left-8 duration-700">
-                            <div className="inline-block px-4 py-1.5 mb-6 text-sm font-bold tracking-wider text-accent uppercase bg-accent/10 rounded-full">
-                                Qui sommes-nous ?
-                            </div>
-                            <h1 className="text-5xl lg:text-7xl font-bold font-['Outfit'] leading-[1.1] mb-8 text-primary">
-                                Experts en Développement <span className="text-accent underline decoration-accent/30 underline-offset-8">Informatique</span>
-                            </h1>
-                            <p className="text-xl text-muted-foreground leading-relaxed mb-10">
-                                Nettmobinfotech est une société de développement informatique située en France et opérant dans toute l'Europe. Nous offrons un rapport qualité-prix exceptionnel et un accompagnement permanent à chaque étape de votre projet.
-                            </p>
-                            <div className="flex flex-wrap gap-4">
-                                <Button size="lg" className="rounded-2xl px-8 h-14 text-base font-bold shadow-premium" onClick={() => window.location.href = '/contact'}>
-                                    Démarrer un projet
-                                </Button>
-                                <Button size="lg" variant="outline" className="rounded-2xl px-8 h-14 text-base font-bold border-accent/20 hover:bg-accent/5" onClick={() => document.getElementById('expertise')?.scrollIntoView({ behavior: 'smooth' })}>
-                                    Voir nos expertises
-                                </Button>
-                            </div>
-                        </div>
+            <section className="relative pt-32 pb-20 overflow-hidden">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl">
+                    <div className="absolute top-20 left-10 w-72 h-72 bg-accent/20 rounded-full blur-[120px]" />
+                    <div className="absolute bottom-20 right-10 w-72 h-72 bg-blue-500/20 rounded-full blur-[120px]" />
+                </div>
 
-                        <div className="relative lg:h-[600px] flex items-center justify-center animate-in fade-in zoom-in-95 duration-1000">
-                            <div className="absolute inset-0 bg-accent/5 rounded-full blur-3xl" />
-                            <div className="relative w-full aspect-square max-w-lg">
-                                <img
-                                    src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1470&auto=format&fit=crop"
-                                    alt="Expertise"
-                                    className="w-full h-full object-cover rounded-[3rem] shadow-premium-dark border border-white/10"
-                                />
-                                <div className="absolute -bottom-8 -left-8 bg-card p-6 rounded-3xl shadow-premium border border-border/50 animate-bounce-slow">
-                                    <div className="flex items-center gap-4">
-                                        <div className="p-3 bg-accent/10 rounded-2xl text-accent">
-                                            <ShieldCheck className="h-8 w-8" />
-                                        </div>
-                                        <div>
-                                            <div className="text-2xl font-bold">100%</div>
-                                            <div className="text-xs text-muted-foreground font-bold uppercase tracking-wider">Qualité Garantie</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <div className="container mx-auto px-4 relative">
+                    <div className="max-w-4xl mx-auto text-center space-y-8">
+                        <Badge variant="outline" className="px-6 py-2 rounded-full border-accent/20 bg-accent/5 text-accent animate-fade-in font-bold">
+                            {t('about.hero.badge')}
+                        </Badge>
+                        <h1 className="text-5xl md:text-7xl font-bold font-['Outfit'] tracking-tight leading-[1.1]" dangerouslySetInnerHTML={{ __html: t('about.hero.title') }} />
+                        <p className="text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
+                            {t('about.hero.desc')}
+                        </p>
                     </div>
                 </div>
             </section>
 
-            {/* Metrics Section */}
-            <section className="py-20 bg-accent/[0.02]">
-                <div className="container mx-auto px-4 lg:px-8">
+            <section className="py-20">
+                <div className="container mx-auto px-4">
                     <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-                        {[
-                            { label: "Années d'Expérience", value: "10+" },
-                            { label: "Projets Terminés", value: "500+" },
-                            { label: "Clients Satfaits", value: "450+" },
-                            { label: "Taux de Réussite", value: "99%" }
-                        ].map((stat, i) => (
-                            <div key={i} className="text-center group">
-                                <div className="text-5xl font-bold font-['Outfit'] text-primary mb-2 group-hover:scale-110 transition-transform duration-300">
-                                    {stat.value}
-                                </div>
-                                <div className="text-sm font-bold text-muted-foreground uppercase tracking-widest">
-                                    {stat.label}
-                                </div>
-                            </div>
+                        {stats.map((stat, i) => (
+                            <Card key={i} className="border-none shadow-premium bg-card/50 backdrop-blur-xl rounded-[2.5rem] overflow-hidden group hover:-translate-y-2 transition-all duration-500">
+                                <CardContent className="p-8 text-center space-y-4">
+                                    <div className="mx-auto w-16 h-16 bg-accent/10 rounded-2xl flex items-center justify-center text-accent group-hover:bg-accent group-hover:text-white transition-all duration-500">
+                                        <stat.icon className="h-8 w-8" />
+                                    </div>
+                                    <div>
+                                        <div className="text-4xl font-bold font-['Outfit'] text-primary">{stat.value}</div>
+                                        <div className="text-sm font-medium text-muted-foreground uppercase tracking-widest">{stat.label}</div>
+                                    </div>
+                                </CardContent>
+                            </Card>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* Mission & Vision */}
-            <section className="py-32">
-                <div className="container mx-auto px-4 lg:px-8">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                        <Card className="border-none shadow-premium bg-card overflow-hidden">
-                            <CardContent className="p-12">
-                                <div className="p-4 bg-accent/10 rounded-2xl text-accent w-fit mb-8">
-                                    <Zap className="h-8 w-8" />
-                                </div>
-                                <h3 className="text-3xl font-bold mb-6 font-['Outfit']">Notre Mission</h3>
+            {/* Content Section */}
+            <section className="py-20">
+                <div className="container mx-auto px-4">
+                    <div className="grid lg:grid-cols-2 gap-20 items-center">
+                        <div className="space-y-10">
+                            <div className="space-y-6">
+                                <h2 className="text-4xl font-bold font-['Outfit']">{t('about.mission.title')}</h2>
                                 <p className="text-lg text-muted-foreground leading-relaxed">
-                                    Fournir des solutions informatiques innovantes et fiables qui répondent aux besoins spécifiques de nos clients, en contribuant à leur croissance et à leur succès dans un monde numérique.
+                                    {t('about.mission.p1')}
                                 </p>
-                            </CardContent>
-                        </Card>
-
-                        <Card className="border-none shadow-premium bg-card overflow-hidden">
-                            <CardContent className="p-12">
-                                <div className="p-4 bg-accent/10 rounded-2xl text-accent w-fit mb-8">
-                                    <Globe className="h-8 w-8" />
-                                </div>
-                                <h3 className="text-3xl font-bold mb-6 font-['Outfit']">Notre Vision</h3>
                                 <p className="text-lg text-muted-foreground leading-relaxed">
-                                    Devenir le partenaire informatique privilégié des entreprises en leur offrant des solutions de pointe et un service d'excellence opérant dans toute l'Europe.
+                                    {t('about.mission.p2')}
                                 </p>
-                            </CardContent>
-                        </Card>
-                    </div>
-                </div>
-            </section>
-
-            {/* Values Grid */}
-            <section className="py-32 bg-accent/5">
-                <div className="container mx-auto px-4 lg:px-8 text-center">
-                    <h2 className="text-4xl lg:text-5xl font-bold font-['Outfit'] mb-16 text-primary">Nos Valeurs Fondamentales</h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {[
-                            { title: "Expertise", desc: "Savoir-faire technique et expérience solide.", icon: <Cpu /> },
-                            { title: "Adaptabilité", desc: "Solutions flexibles et sur-mesure.", icon: <Layers /> },
-                            { title: "Proximité", desc: "Réactivité et écoute active de vos besoins.", icon: <MousePointer2 /> },
-                            { title: "Engagement", desc: "Dévouement total à la satisfaction client.", icon: <ShieldCheck /> }
-                        ].map((val, i) => (
-                            <div key={i} className="p-10 bg-background rounded-[2.5rem] shadow-premium hover:-translate-y-2 transition-all duration-300 group">
-                                <div className="p-5 bg-accent/10 rounded-2xl text-accent inline-block mb-6 group-hover:bg-accent group-hover:text-white transition-colors">
-                                    {val.icon}
-                                </div>
-                                <h4 className="text-xl font-bold mb-4 font-['Outfit']">{val.title}</h4>
-                                <p className="text-muted-foreground leading-relaxed">{val.desc}</p>
                             </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
 
-            {/* Expertise Section (Tabs) */}
-            <section id="expertise" className="py-32">
-                <div className="container mx-auto px-4 lg:px-8">
-                    <div className="text-center max-w-3xl mx-auto mb-20">
-                        <h2 className="text-4xl lg:text-5xl font-bold font-['Outfit'] mb-6">Expertises Techniques</h2>
-                        <p className="text-muted-foreground text-lg">Nous combinons créativité et rigueur technique pour donner vie à vos idées.</p>
-                    </div>
-
-                    <div className="bg-card rounded-[3rem] p-4 lg:p-12 shadow-premium border border-border/50">
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-                            {/* Tab Buttons */}
-                            <div className="lg:col-span-4 flex flex-col gap-4">
-                                {specialties.map((spec, i) => (
-                                    <button
-                                        key={i}
-                                        onClick={() => setActiveTab(i)}
-                                        className={`p-6 rounded-3xl text-left transition-all flex items-center gap-6 ${activeTab === i ? 'bg-primary text-primary-foreground shadow-premium scale-[1.02]' : 'hover:bg-accent/5'}`}
-                                    >
-                                        <div className={`p-3 rounded-2xl ${activeTab === i ? 'bg-white/20' : 'bg-accent/10 text-accent'}`}>
-                                            {spec.icon}
+                            <div className="grid sm:grid-cols-3 gap-6">
+                                {values.map((value, i) => (
+                                    <div key={i} className="space-y-4 p-6 rounded-[2rem] bg-accent/5 border border-accent/10">
+                                        <div className={`p-3 rounded-xl w-fit ${value.bg} ${value.color}`}>
+                                            <value.icon className="h-6 w-6" />
                                         </div>
-                                        <div>
-                                            <div className="text-xs font-bold uppercase tracking-wider mb-1 opacity-70">{spec.id}</div>
-                                            <div className="text-lg font-bold font-['Outfit']">{spec.title}</div>
-                                        </div>
-                                    </button>
+                                        <h3 className="font-bold text-lg">{value.title}</h3>
+                                        <p className="text-sm text-muted-foreground">{value.desc}</p>
+                                    </div>
                                 ))}
                             </div>
+                        </div>
 
-                            {/* Tab Content */}
-                            <div className="lg:col-span-8 bg-background relative rounded-[2rem] overflow-hidden group min-h-[500px]">
+                        <div className="relative group">
+                            <div className="absolute -inset-4 bg-gradient-to-r from-accent to-blue-500 rounded-[3rem] blur-2xl opacity-20 group-hover:opacity-40 transition-all duration-700" />
+                            <Card className="relative border-none shadow-2xl rounded-[3rem] overflow-hidden bg-black aspect-video">
                                 <img
-                                    src={specialties[activeTab].image}
-                                    alt={specialties[activeTab].title}
-                                    className="absolute inset-0 w-full h-full object-cover opacity-20 grayscale brightness-50"
+                                    src="/quote_hero_office.png"
+                                    alt="About NettmobInfotech"
+                                    className="w-full h-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-105"
                                 />
-                                <div className="relative p-12 h-full flex flex-col justify-center">
-                                    <div className="mb-8">
-                                        <div className="text-accent font-bold mb-4 tracking-widest uppercase text-sm">
-                                            {specialties[activeTab].subtitle}
-                                        </div>
-                                        <h3 className="text-4xl font-bold font-['Outfit'] mb-6">
-                                            {specialties[activeTab].description}
-                                        </h3>
-                                    </div>
-                                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                        {specialties[activeTab].items.map((item, i) => (
-                                            <li key={i} className="flex items-center gap-4 text-muted-foreground font-medium bg-card/50 p-4 rounded-2xl border border-border/30">
-                                                <div className="h-2 w-2 rounded-full bg-accent" />
-                                                {item}
-                                            </li>
-                                        ))}
-                                    </ul>
+                            </Card>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Methodology Section */}
+            <section className="py-20 bg-accent/5">
+                <div className="container mx-auto px-4">
+                    <div className="max-w-3xl mx-auto text-center mb-16 space-y-4">
+                        <h2 className="text-4xl font-bold font-['Outfit']">{t('about.methodology.title')}</h2>
+                        <p className="text-muted-foreground">
+                            {t('about.methodology.desc')}
+                        </p>
+                    </div>
+                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        {steps.map((step, i) => (
+                            <div key={i} className="relative group">
+                                <div className="p-8 rounded-[2.5rem] bg-background border border-border/50 shadow-sm hover:shadow-premium transition-all duration-500 h-full">
+                                    <div className="text-6xl font-black text-accent/10 absolute top-4 right-8 group-hover:text-accent/20 transition-colors">0{i + 1}</div>
+                                    <h3 className="text-xl font-bold mb-4 mt-4">{step.title}</h3>
+                                    <p className="text-muted-foreground leading-relaxed">{step.desc}</p>
                                 </div>
                             </div>
-                        </div>
+                        ))}
                     </div>
                 </div>
             </section>
 
             {/* CTA Section */}
-            <section className="py-32">
-                <div className="container mx-auto px-4 lg:px-8">
-                    <div className="bg-primary rounded-[3.5rem] p-12 lg:p-24 text-center text-primary-foreground relative overflow-hidden shadow-premium-dark">
-                        <div className="absolute top-0 right-0 w-96 h-96 bg-accent opacity-10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
-                        <div className="relative z-10 max-w-2xl mx-auto">
-                            <h2 className="text-4xl lg:text-6xl font-bold font-['Outfit'] mb-8">Prêt à digitaliser votre entreprise ?</h2>
-                            <p className="text-xl opacity-80 mb-12">
-                                Recevez un devis gratuit et personnalisé pour votre projet de développement informatique.
-                            </p>
-                            <Button
-                                size="lg"
-                                className="bg-primary text-primary-foreground dark:bg-accent dark:text-white hover:opacity-90 px-10 h-16 rounded-2xl text-lg font-bold shadow-xl transition-all"
-                                onClick={() => window.location.href = '/demande-de-devis'}
-                            >
-                                Demander un Devis
-                            </Button>
+            <section className="py-20">
+                <div className="container mx-auto px-4">
+                    <div className="relative rounded-[4rem] overflow-hidden bg-accent p-12 lg:p-20 text-center text-white">
+                        <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-[100px] -mr-48 -mt-48" />
+                        <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/20 rounded-full blur-[100px] -ml-48 -mb-48" />
+
+                        <div className="relative max-w-3xl mx-auto space-y-10">
+                            <h2 className="text-4xl md:text-5xl font-bold font-['Outfit'] leading-tight">
+                                {t('about.cta.title')}
+                            </h2>
+                            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                                <Link to={getLocalizedPath("/contact")}>
+                                    <Button size="lg" className="bg-white text-accent hover:bg-white/90 px-10 h-16 rounded-2xl text-lg font-bold shadow-xl transition-all hover:-translate-y-1 w-full sm:w-auto">
+                                        {t('about.cta.button')}
+                                    </Button>
+                                </Link>
+                                <Link to={getLocalizedPath("/services")}>
+                                    <Button size="lg" variant="outline" className="border-white/20 bg-transparent hover:bg-white text-white hover:text-accent px-10 h-16 rounded-2xl text-lg font-bold w-full sm:w-auto transition-all backdrop-blur-sm">
+                                        {t('nav.services')}
+                                    </Button>
+                                </Link>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -282,3 +200,4 @@ export const About = () => {
         </div>
     );
 };
+

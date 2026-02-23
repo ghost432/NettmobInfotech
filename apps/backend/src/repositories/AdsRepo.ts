@@ -15,8 +15,18 @@ export interface Ad {
     format: AdFormat;
     pages: AdPage[];
     isActive: boolean;
+    title_en?: string;
+    description_en?: string;
+    buttonText_en?: string;
+    title_es?: string;
+    description_es?: string;
+    buttonText_es?: string;
+    title_de?: string;
+    description_de?: string;
+    buttonText_de?: string;
     createdAt?: Date;
 }
+
 
 @injectable()
 export class AdsRepo {
@@ -34,6 +44,15 @@ export class AdsRepo {
                 format ENUM('square', 'rectangle', 'vertical', 'horizontal') DEFAULT 'rectangle',
                 pages JSON,
                 isActive BOOLEAN DEFAULT TRUE,
+                title_en VARCHAR(255),
+                description_en TEXT,
+                buttonText_en VARCHAR(100),
+                title_es VARCHAR(255),
+                description_es TEXT,
+                buttonText_es VARCHAR(100),
+                title_de VARCHAR(255),
+                description_de TEXT,
+                buttonText_de VARCHAR(100),
                 createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         `);
@@ -73,8 +92,8 @@ export class AdsRepo {
 
     public async create(ad: Ad): Promise<number> {
         const result = await this.db.query(
-            "INSERT INTO ads (title, description, imageUrl, buttonText, buttonUrl, format, pages, isActive) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-            [ad.title, ad.description, ad.imageUrl, ad.buttonText, ad.buttonUrl, ad.format, JSON.stringify(ad.pages), ad.isActive !== false]
+            "INSERT INTO ads (title, description, imageUrl, buttonText, buttonUrl, format, pages, isActive, title_en, description_en, buttonText_en, title_es, description_es, buttonText_es, title_de, description_de, buttonText_de) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            [ad.title, ad.description, ad.imageUrl, ad.buttonText, ad.buttonUrl, ad.format, JSON.stringify(ad.pages), ad.isActive !== false, ad.title_en, ad.description_en, ad.buttonText_en, ad.title_es, ad.description_es, ad.buttonText_es, ad.title_de, ad.description_de, ad.buttonText_de]
         );
         return result.insertId;
     }
@@ -91,6 +110,16 @@ export class AdsRepo {
         if (ad.format !== undefined) { sets.push("format = ?"); params.push(ad.format); }
         if (ad.pages !== undefined) { sets.push("pages = ?"); params.push(JSON.stringify(ad.pages)); }
         if (ad.isActive !== undefined) { sets.push("isActive = ?"); params.push(ad.isActive); }
+
+        if (ad.title_en !== undefined) { sets.push("title_en = ?"); params.push(ad.title_en); }
+        if (ad.description_en !== undefined) { sets.push("description_en = ?"); params.push(ad.description_en); }
+        if (ad.buttonText_en !== undefined) { sets.push("buttonText_en = ?"); params.push(ad.buttonText_en); }
+        if (ad.title_es !== undefined) { sets.push("title_es = ?"); params.push(ad.title_es); }
+        if (ad.description_es !== undefined) { sets.push("description_es = ?"); params.push(ad.description_es); }
+        if (ad.buttonText_es !== undefined) { sets.push("buttonText_es = ?"); params.push(ad.buttonText_es); }
+        if (ad.title_de !== undefined) { sets.push("title_de = ?"); params.push(ad.title_de); }
+        if (ad.description_de !== undefined) { sets.push("description_de = ?"); params.push(ad.description_de); }
+        if (ad.buttonText_de !== undefined) { sets.push("buttonText_de = ?"); params.push(ad.buttonText_de); }
 
         if (sets.length === 0) return;
         params.push(id);

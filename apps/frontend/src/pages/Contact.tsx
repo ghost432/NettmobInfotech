@@ -10,9 +10,12 @@ import 'react-phone-number-input/style.css';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useNavigate } from "react-router-dom";
 import api from "@/lib/api";
+import { useTranslation } from "react-i18next";
+
 
 export const Contact = () => {
-    usePageTitle("Contactez-nous");
+    const { t } = useTranslation();
+    usePageTitle(t('contact.title'));
     const navigate = useNavigate();
     const [phone, setPhone] = useState<string | undefined>();
     const [showSuccess, setShowSuccess] = useState(false);
@@ -71,16 +74,16 @@ export const Contact = () => {
     return (
         <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
             <SEO
-                title="Contact & Devis Gratuit - Agence Digitale à Paris"
-                description="Contactez NettmobInfotech pour discuter de votre projet web ou mobile. Devis gratuit sous 24h. Situés au 10 Rue du Colisée, 75008 Paris."
-                keywords="contact agence web paris, devis développement application, rendez-vous consultant digital, agence seo paris 8, support technique informatique"
+                title={t('contact.title')}
+                description={t('contact.description')}
+                keywords={t('contact.keywords')}
                 schemaData={contactSchema}
             />
             <div className="container mx-auto px-4 lg:px-8">
                 <div className="text-center mb-16">
-                    <h1 className="text-4xl lg:text-6xl font-bold font-['Outfit'] text-primary mb-6">Contactez-Nous</h1>
+                    <h1 className="text-4xl lg:text-6xl font-bold font-['Outfit'] text-primary mb-6">{t('contact.hero.title')}</h1>
                     <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                        Une idée ? Un projet ? Notre équipe est prête à vous accompagner dans votre transformation digitale.
+                        {t('contact.hero.desc')}
                     </p>
                 </div>
 
@@ -88,9 +91,9 @@ export const Contact = () => {
                     {/* Contact Info */}
                     <div className="space-y-6">
                         {[
-                            { icon: <MapPin />, title: "Notre Adresse", detail: "10 Rue du Colisée, 75008 Paris" },
-                            { icon: <Phone />, title: "Téléphone", detail: "+33 7 66 39 09 92" },
-                            { icon: <Mail />, title: "Email", detail: "contact@nettmobinfotech.fr" }
+                            { icon: <MapPin />, title: t('contact.info.address.title'), detail: t('contact.info.address.detail') },
+                            { icon: <Phone />, title: t('contact.info.phone.title'), detail: t('contact.info.phone.detail') },
+                            { icon: <Mail />, title: t('contact.info.email.title'), detail: t('contact.info.email.detail') }
                         ].map((info, i) => (
                             <Card key={i} className="border-none shadow-premium bg-card rounded-2xl overflow-hidden hover:scale-[1.02] transition-transform">
                                 <CardContent className="p-8 flex items-center space-x-6">
@@ -113,44 +116,44 @@ export const Contact = () => {
                                 <form onSubmit={handleSubmit} className="space-y-6">
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div className="space-y-2">
-                                            <label className="text-sm font-medium">Prénom</label>
+                                            <label className="text-sm font-medium">{t('contact.form.firstName')}</label>
                                             <Input
                                                 required
                                                 value={formData.firstName}
                                                 onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                                                placeholder="Votre prénom"
+                                                placeholder={t('contact.form.firstNamePlaceholder')}
                                                 className="rounded-xl h-12 bg-background/50"
                                             />
                                         </div>
                                         <div className="space-y-2">
-                                            <label className="text-sm font-medium">Nom</label>
+                                            <label className="text-sm font-medium">{t('contact.form.lastName')}</label>
                                             <Input
                                                 required
                                                 value={formData.lastName}
                                                 onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-                                                placeholder="Votre nom"
+                                                placeholder={t('contact.form.lastNamePlaceholder')}
                                                 className="rounded-xl h-12 bg-background/50"
                                             />
                                         </div>
                                     </div>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div className="space-y-2">
-                                            <label className="text-sm font-medium">Email</label>
+                                            <label className="text-sm font-medium">{t('contact.form.email')}</label>
                                             <Input
                                                 required
                                                 type="email"
                                                 value={formData.email}
                                                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                                placeholder="votre@email.com"
+                                                placeholder={t('contact.form.emailPlaceholder')}
                                                 className="rounded-xl h-12 bg-background/50"
                                             />
                                         </div>
                                         <div className="space-y-2">
-                                            <label className="text-sm font-medium">Téléphone</label>
+                                            <label className="text-sm font-medium">{t('contact.form.phone')}</label>
                                             <div className="phone-input-container">
                                                 <PhoneInput
                                                     defaultCountry="FR"
-                                                    placeholder="Numéro de téléphone"
+                                                    placeholder={t('contact.form.phonePlaceholder')}
                                                     value={phone}
                                                     onChange={setPhone}
                                                     className="flex h-12 w-full rounded-xl border border-input bg-background/50 px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
@@ -159,27 +162,27 @@ export const Contact = () => {
                                         </div>
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-sm font-medium">Sujet</label>
+                                        <label className="text-sm font-medium">{t('contact.form.subject')}</label>
                                         <Input
                                             required
                                             value={formData.subject}
                                             onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                                            placeholder="Sujet de votre message"
+                                            placeholder={t('contact.form.subjectPlaceholder')}
                                             className="rounded-xl h-12 bg-background/50"
                                         />
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-sm font-medium">Message</label>
+                                        <label className="text-sm font-medium">{t('contact.form.message')}</label>
                                         <textarea
                                             required
                                             value={formData.message}
                                             onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                                             className="w-full min-h-[150px] p-4 rounded-xl border border-input bg-background/50 focus:ring-2 focus:ring-accent outline-none transition-all"
-                                            placeholder="Comment pouvons-nous vous aider ?"
+                                            placeholder={t('contact.form.messagePlaceholder')}
                                         ></textarea>
                                     </div>
                                     <Button disabled={loading} size="lg" className="w-full rounded-xl h-14 text-lg shadow-premium group">
-                                        {loading ? "Envoi en cours..." : "Envoyer le Message"}
+                                        {loading ? t('contact.form.sending') : t('contact.form.send')}
                                         <Send className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                                     </Button>
                                 </form>
@@ -213,9 +216,9 @@ export const Contact = () => {
                         <div className="h-20 w-20 bg-accent/10 rounded-full flex items-center justify-center mb-4">
                             <CheckCircle2 className="h-10 w-10 text-accent animate-bounce" />
                         </div>
-                        <DialogTitle className="text-2xl font-bold font-['Outfit'] text-center">Message Envoyé !</DialogTitle>
+                        <DialogTitle className="text-2xl font-bold font-['Outfit'] text-center">{t('contact.success.title')}</DialogTitle>
                         <DialogDescription className="text-center text-muted-foreground mt-2">
-                            Votre message a été bien reçu. Notre équipe vous contactera dans les plus brefs délais.
+                            {t('contact.success.desc')}
                         </DialogDescription>
                     </DialogHeader>
                 </DialogContent>

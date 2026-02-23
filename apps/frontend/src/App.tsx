@@ -25,13 +25,20 @@ import { ScrollToTopButton } from "./components/common/ScrollToTopButton";
 import { useLocation } from "react-router-dom";
 import { useAnalytics } from "./hooks/useAnalytics";
 
+import { LanguageWatcher } from "./components/common/LanguageWatcher";
+
 function App() {
   return (
     <>
       <Preloader />
       <Router>
         <ScrollToTop />
-        <AppContent />
+        <Routes>
+          <Route path="/en/*" element={<AppContent />} />
+          <Route path="/es/*" element={<AppContent />} />
+          <Route path="/de/*" element={<AppContent />} />
+          <Route path="/*" element={<AppContent />} />
+        </Routes>
       </Router>
     </>
   );
@@ -43,6 +50,7 @@ function AppContent() {
 
   return (
     <>
+      <LanguageWatcher />
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />

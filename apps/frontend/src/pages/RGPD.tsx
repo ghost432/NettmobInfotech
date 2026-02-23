@@ -1,19 +1,21 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import { Lock, Shield, Eye, FileText, UserCheck, Mail, AlertCircle, Database, Globe, Clock } from "lucide-react";
+import { Lock, Shield, Eye, FileText, UserCheck, Mail } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { usePageTitle } from "@/hooks/usePageTitle";
 import { SEO } from "@/components/common/SEO";
+import { useTranslation } from "react-i18next";
+import { getLocalizedPath } from "@/lib/i18nUtils";
 
 export const RGPD = () => {
-    usePageTitle("RGPD & Protection des Données");
+    const { t } = useTranslation();
+    usePageTitle(t('rgpd.title'));
 
     return (
         <div className="min-h-screen bg-background py-20 px-4">
             <SEO
-                title="RGPD - Protection des Données Personnelles | NettmobInfotech"
-                description="Notre politique RGPD et protection des données personnelles. Transparence totale sur le traitement de vos informations."
-                keywords="RGPD, protection données, vie privée, conformité, données personnelles, sécurité"
+                title={t('rgpd.title')}
+                description={t('rgpd.description')}
+                keywords={t('rgpd.keywords')}
             />
             {/* Hero Section */}
             <section className="py-20 bg-background">
@@ -22,10 +24,10 @@ export const RGPD = () => {
                         <Lock className="h-16 w-16" />
                     </div>
                     <h1 className="text-4xl lg:text-5xl font-bold text-center mb-4 font-['Outfit'] text-foreground">
-                        RGPD & Protection des Données
+                        {t('rgpd.hero.title')}
                     </h1>
                     <p className="text-xl text-center text-muted-foreground max-w-3xl mx-auto">
-                        Notre engagement pour la protection de vos données personnelles
+                        {t('rgpd.hero.subtitle')}
                     </p>
                 </div>
             </section>
@@ -37,34 +39,31 @@ export const RGPD = () => {
                         <CardContent className="p-8 lg:p-12 space-y-8">
                             {/* Introduction RGPD */}
                             <div>
-                                <h2 className="text-2xl font-bold mb-4 text-primary font-['Outfit']">Qu'est-ce que le RGPD ?</h2>
+                                <h2 className="text-2xl font-bold mb-4 text-primary font-['Outfit']">{t('rgpd.what.title')}</h2>
                                 <p className="text-muted-foreground leading-relaxed">
-                                    Le Règlement Général sur la Protection des Données (RGPD) est un règlement européen entré en vigueur
-                                    le 25 mai 2018. Il vise à renforcer et unifier la protection des données personnelles des citoyens
-                                    de l'Union européenne.
+                                    {t('rgpd.what.p1')}
                                 </p>
                                 <p className="text-muted-foreground leading-relaxed mt-4">
-                                    En France, le RGPD complète la loi Informatique et Libertés de 1978 modifiée, et est appliqué sous
-                                    le contrôle de la CNIL (Commission Nationale de l'Informatique et des Libertés).
+                                    {t('rgpd.what.p2')}
                                 </p>
                             </div>
 
                             {/* Responsable du Traitement */}
                             <div>
-                                <h2 className="text-2xl font-bold mb-4 text-primary font-['Outfit']">Responsable du Traitement</h2>
+                                <h2 className="text-2xl font-bold mb-4 text-primary font-['Outfit']">{t('rgpd.responsible.title')}</h2>
                                 <div className="bg-primary/5 p-6 rounded-xl space-y-2">
                                     <p className="font-bold text-primary">NettmobInfotech</p>
                                     <p className="text-muted-foreground">10 Rue du Colisée, 75008 Paris, France</p>
-                                    <p className="text-muted-foreground">Email : contact@nettmobinfotech.fr</p>
-                                    <p className="text-muted-foreground">Téléphone : +33 7 66 39 09 92</p>
+                                    <p className="text-muted-foreground">{t('rgpd.responsible.email')} : contact@nettmobinfotech.fr</p>
+                                    <p className="text-muted-foreground">{t('rgpd.responsible.phone')} : +33 7 66 39 09 92</p>
                                 </div>
                             </div>
 
                             {/* Vos Droits en Détail */}
                             <div>
-                                <h2 className="text-2xl font-bold mb-4 text-primary font-['Outfit']">Vos Droits RGPD en Détail</h2>
+                                <h2 className="text-2xl font-bold mb-4 text-primary font-['Outfit']">{t('rgpd.rights_detail.title')}</h2>
                                 <p className="text-muted-foreground leading-relaxed mb-6">
-                                    Le RGPD vous confère des droits renforcés sur vos données personnelles :
+                                    {t('rgpd.rights_detail.desc')}
                                 </p>
 
                                 <div className="space-y-4">
@@ -73,10 +72,9 @@ export const RGPD = () => {
                                             <div className="flex items-start gap-4">
                                                 <Eye className="h-6 w-6 text-accent mt-1" />
                                                 <div>
-                                                    <h3 className="font-bold text-primary mb-2">Droit d'Accès (Art. 15 RGPD)</h3>
+                                                    <h3 className="font-bold text-primary mb-2">{t('rgpd.rights.access.title')}</h3>
                                                     <p className="text-sm text-muted-foreground">
-                                                        Vous avez le droit d'obtenir la confirmation que vos données sont traitées et d'accéder
-                                                        à ces données. Nous vous fournirons une copie gratuite de vos données personnelles.
+                                                        {t('rgpd.rights.access.desc')}
                                                     </p>
                                                 </div>
                                             </div>
@@ -88,10 +86,9 @@ export const RGPD = () => {
                                             <div className="flex items-start gap-4">
                                                 <FileText className="h-6 w-6 text-accent mt-1" />
                                                 <div>
-                                                    <h3 className="font-bold text-primary mb-2">Droit de Rectification (Art. 16 RGPD)</h3>
+                                                    <h3 className="font-bold text-primary mb-2">{t('rgpd.rights.rectification.title')}</h3>
                                                     <p className="text-sm text-muted-foreground">
-                                                        Vous pouvez demander la correction de données inexactes ou incomplètes vous concernant.
-                                                        Nous procéderons à la rectification dans les meilleurs délais.
+                                                        {t('rgpd.rights.rectification.desc')}
                                                     </p>
                                                 </div>
                                             </div>
@@ -103,10 +100,9 @@ export const RGPD = () => {
                                             <div className="flex items-start gap-4">
                                                 <Shield className="h-6 w-6 text-accent mt-1" />
                                                 <div>
-                                                    <h3 className="font-bold text-primary mb-2">Droit à l'Effacement / "Droit à l'Oubli" (Art. 17 RGPD)</h3>
+                                                    <h3 className="font-bold text-primary mb-2">{t('rgpd.rights.erasure.title')}</h3>
                                                     <p className="text-sm text-muted-foreground">
-                                                        Vous pouvez demander l'effacement de vos données dans certains cas : retrait du consentement,
-                                                        données non nécessaires, opposition légitime, traitement illicite.
+                                                        {t('rgpd.rights.erasure.desc')}
                                                     </p>
                                                 </div>
                                             </div>
@@ -118,10 +114,9 @@ export const RGPD = () => {
                                             <div className="flex items-start gap-4">
                                                 <Lock className="h-6 w-6 text-accent mt-1" />
                                                 <div>
-                                                    <h3 className="font-bold text-primary mb-2">Droit à la Limitation du Traitement (Art. 18 RGPD)</h3>
+                                                    <h3 className="font-bold text-primary mb-2">{t('rgpd.rights.limitation.title')}</h3>
                                                     <p className="text-sm text-muted-foreground">
-                                                        Vous pouvez demander la limitation du traitement de vos données dans certaines circonstances,
-                                                        notamment lors d'une contestation de l'exactitude des données.
+                                                        {t('rgpd.rights.limitation.desc')}
                                                     </p>
                                                 </div>
                                             </div>
@@ -133,10 +128,9 @@ export const RGPD = () => {
                                             <div className="flex items-start gap-4">
                                                 <UserCheck className="h-6 w-6 text-accent mt-1" />
                                                 <div>
-                                                    <h3 className="font-bold text-primary mb-2">Droit à la Portabilité (Art. 20 RGPD)</h3>
+                                                    <h3 className="font-bold text-primary mb-2">{t('rgpd.rights.portability.title')}</h3>
                                                     <p className="text-sm text-muted-foreground">
-                                                        Vous pouvez recevoir vos données dans un format structuré, couramment utilisé et lisible par machine,
-                                                        et les transmettre à un autre responsable du traitement.
+                                                        {t('rgpd.rights.portability.desc')}
                                                     </p>
                                                 </div>
                                             </div>
@@ -148,10 +142,9 @@ export const RGPD = () => {
                                             <div className="flex items-start gap-4">
                                                 <Shield className="h-6 w-6 text-accent mt-1" />
                                                 <div>
-                                                    <h3 className="font-bold text-primary mb-2">Droit d'Opposition (Art. 21 RGPD)</h3>
+                                                    <h3 className="font-bold text-primary mb-2">{t('rgpd.rights.opposition.title')}</h3>
                                                     <p className="text-sm text-muted-foreground">
-                                                        Vous pouvez vous opposer à tout moment au traitement de vos données pour des raisons tenant
-                                                        à votre situation particulière, notamment en cas de prospection commerciale.
+                                                        {t('rgpd.rights.opposition.desc')}
                                                     </p>
                                                 </div>
                                             </div>
@@ -162,27 +155,27 @@ export const RGPD = () => {
 
                             {/* Base Légale */}
                             <div>
-                                <h2 className="text-2xl font-bold mb-4 text-primary font-['Outfit']">Bases Légales du Traitement</h2>
+                                <h2 className="text-2xl font-bold mb-4 text-primary font-['Outfit']">{t('rgpd.legal_basis.title')}</h2>
                                 <p className="text-muted-foreground leading-relaxed mb-4">
-                                    Conformément à l'article 6 du RGPD, nous traitons vos données sur les bases légales suivantes :
+                                    {t('rgpd.legal_basis.desc')}
                                 </p>
                                 <div className="space-y-3">
                                     <div className="bg-accent/5 p-4 rounded-xl">
-                                        <h3 className="font-bold text-primary mb-2">Consentement (Art. 6.1.a)</h3>
+                                        <h3 className="font-bold text-primary mb-2">{t('rgpd.basis.consent.title')}</h3>
                                         <p className="text-sm text-muted-foreground">
-                                            En soumettant nos formulaires, vous consentez expressément au traitement de vos données
+                                            {t('rgpd.basis.consent.desc')}
                                         </p>
                                     </div>
                                     <div className="bg-accent/5 p-4 rounded-xl">
-                                        <h3 className="font-bold text-primary mb-2">Exécution d'un Contrat (Art. 6.1.b)</h3>
+                                        <h3 className="font-bold text-primary mb-2">{t('rgpd.basis.contract.title')}</h3>
                                         <p className="text-sm text-muted-foreground">
-                                            Le traitement est nécessaire à l'exécution de nos prestations de services
+                                            {t('rgpd.basis.contract.desc')}
                                         </p>
                                     </div>
                                     <div className="bg-accent/5 p-4 rounded-xl">
-                                        <h3 className="font-bold text-primary mb-2">Intérêt Légitime (Art. 6.1.f)</h3>
+                                        <h3 className="font-bold text-primary mb-2">{t('rgpd.basis.interest.title')}</h3>
                                         <p className="text-sm text-muted-foreground">
-                                            Amélioration de nos services et suivi de la relation client
+                                            {t('rgpd.basis.interest.desc')}
                                         </p>
                                     </div>
                                 </div>
@@ -190,50 +183,48 @@ export const RGPD = () => {
 
                             {/* Durée de Conservation */}
                             <div>
-                                <h2 className="text-2xl font-bold mb-4 text-primary font-['Outfit']">Durée de Conservation des Données</h2>
+                                <h2 className="text-2xl font-bold mb-4 text-primary font-['Outfit']">{t('rgpd.retention.title')}</h2>
                                 <div className="bg-primary/5 p-6 rounded-xl">
                                     <p className="text-muted-foreground leading-relaxed mb-4">
-                                        Conformément au principe de minimisation et de limitation de la conservation (Art. 5 RGPD),
-                                        vos données sont conservées :
+                                        {t('rgpd.retention.desc')}
                                     </p>
                                     <ul className="list-disc list-inside space-y-2 text-muted-foreground ml-4">
-                                        <li><strong>Prospects (devis, cahier des charges)</strong> : 3 ans après le dernier contact</li>
-                                        <li><strong>Clients</strong> : Durée de la relation contractuelle + 5 ans (obligations comptables)</li>
-                                        <li><strong>Données de connexion</strong> : 12 mois (obligations légales)</li>
+                                        <li><strong>{t('rgpd.retention.prospects.label')}</strong> : {t('rgpd.retention.prospects.value')}</li>
+                                        <li><strong>{t('rgpd.retention.clients.label')}</strong> : {t('rgpd.retention.clients.value')}</li>
+                                        <li><strong>{t('rgpd.retention.connection.label')}</strong> : {t('rgpd.retention.connection.value')}</li>
                                     </ul>
                                 </div>
                             </div>
 
                             {/* Sécurité */}
                             <div>
-                                <h2 className="text-2xl font-bold mb-4 text-primary font-['Outfit']">Mesures de Sécurité</h2>
+                                <h2 className="text-2xl font-bold mb-4 text-primary font-['Outfit']">{t('rgpd.security.title')}</h2>
                                 <p className="text-muted-foreground leading-relaxed mb-4">
-                                    Conformément à l'article 32 du RGPD, nous mettons en œuvre les mesures techniques et organisationnelles
-                                    appropriées pour garantir un niveau de sécurité adapté au risque :
+                                    {t('rgpd.security.desc')}
                                 </p>
                                 <div className="grid md:grid-cols-2 gap-4">
                                     <div className="bg-accent/5 p-4 rounded-xl">
-                                        <h3 className="font-bold text-primary mb-2 text-sm">Chiffrement des Données</h3>
+                                        <h3 className="font-bold text-primary mb-2 text-sm">{t('rgpd.security.encryption.title')}</h3>
                                         <p className="text-xs text-muted-foreground">
-                                            Chiffrement SSL/TLS pour les transmissions, chiffrement au repos pour les données sensibles
+                                            {t('rgpd.security.encryption.desc')}
                                         </p>
                                     </div>
                                     <div className="bg-accent/5 p-4 rounded-xl">
-                                        <h3 className="font-bold text-primary mb-2 text-sm">Contrôle d'Accès</h3>
+                                        <h3 className="font-bold text-primary mb-2 text-sm">{t('rgpd.security.access.title')}</h3>
                                         <p className="text-xs text-muted-foreground">
-                                            Accès limité aux seules personnes habilitées, authentification forte
+                                            {t('rgpd.security.access.desc')}
                                         </p>
                                     </div>
                                     <div className="bg-accent/5 p-4 rounded-xl">
-                                        <h3 className="font-bold text-primary mb-2 text-sm">Sauvegardes Sécurisées</h3>
+                                        <h3 className="font-bold text-primary mb-2 text-sm">{t('rgpd.security.backup.title')}</h3>
                                         <p className="text-xs text-muted-foreground">
-                                            Sauvegardes régulières, chiffrées et stockées de manière sécurisée
+                                            {t('rgpd.security.backup.desc')}
                                         </p>
                                     </div>
                                     <div className="bg-accent/5 p-4 rounded-xl">
-                                        <h3 className="font-bold text-primary mb-2 text-sm">Surveillance Continue</h3>
+                                        <h3 className="font-bold text-primary mb-2 text-sm">{t('rgpd.security.monitoring.title')}</h3>
                                         <p className="text-xs text-muted-foreground">
-                                            Détection et réponse aux incidents de sécurité, mises à jour régulières
+                                            {t('rgpd.security.monitoring.desc')}
                                         </p>
                                     </div>
                                 </div>
@@ -241,79 +232,69 @@ export const RGPD = () => {
 
                             {/* Transferts de Données */}
                             <div>
-                                <h2 className="text-2xl font-bold mb-4 text-primary font-['Outfit']">Transferts de Données</h2>
+                                <h2 className="text-2xl font-bold mb-4 text-primary font-['Outfit']">{t('rgpd.transfer.title')}</h2>
                                 <p className="text-muted-foreground leading-relaxed">
-                                    Vos données personnelles sont hébergées en France et ne font l'objet d'aucun transfert en dehors
-                                    de l'Union européenne. En cas de transfert futur, nous nous assurerons que celui-ci est encadré
-                                    conformément au Chapitre V du RGPD (clauses contractuelles types, décision d'adéquation, etc.).
+                                    {t('rgpd.transfer.desc')}
                                 </p>
                             </div>
 
                             {/* Violation de Données */}
                             <div>
-                                <h2 className="text-2xl font-bold mb-4 text-primary font-['Outfit']">Violation de Données</h2>
+                                <h2 className="text-2xl font-bold mb-4 text-primary font-['Outfit']">{t('rgpd.breach.title')}</h2>
                                 <p className="text-muted-foreground leading-relaxed">
-                                    Conformément à l'article 33 du RGPD, en cas de violation de données personnelles susceptible
-                                    d'engendrer un risque élevé pour vos droits et libertés, nous vous en informerons dans les
-                                    meilleurs délais et notifierons la CNIL dans les 72 heures.
+                                    {t('rgpd.breach.desc')}
                                 </p>
                             </div>
 
                             {/* Exercer Vos Droits */}
                             <div>
-                                <h2 className="text-2xl font-bold mb-4 text-primary font-['Outfit']">Comment Exercer Vos Droits ?</h2>
+                                <h2 className="text-2xl font-bold mb-4 text-primary font-['Outfit']">{t('rgpd.exercise.title')}</h2>
                                 <p className="text-muted-foreground leading-relaxed mb-4">
-                                    Pour exercer l'un de vos droits, vous pouvez nous contacter par :
+                                    {t('rgpd.exercise.desc')}
                                 </p>
                                 <div className="bg-accent/5 p-6 rounded-xl space-y-4">
                                     <div className="flex items-start gap-3">
                                         <Mail className="h-5 w-5 text-accent mt-1" />
                                         <div>
-                                            <p className="font-bold text-primary">Email</p>
+                                            <p className="font-bold text-primary">{t('rgpd.exercise.email.label')}</p>
                                             <a href="mailto:contact@nettmobinfotech.fr" className="text-accent hover:underline">
                                                 contact@nettmobinfotech.fr
                                             </a>
                                             <p className="text-xs text-muted-foreground mt-1">
-                                                Objet : "Exercice de mes droits RGPD"
+                                                {t('rgpd.exercise.email.subject')}
                                             </p>
                                         </div>
                                     </div>
                                     <div className="flex items-start gap-3">
                                         <FileText className="h-5 w-5 text-accent mt-1" />
                                         <div>
-                                            <p className="font-bold text-primary">Courrier postal</p>
-                                            <p className="text-sm text-muted-foreground">
-                                                NettmobInfotech - Service Protection des Données<br />
-                                                10 Rue du Colisée<br />
-                                                75008 Paris, France
+                                            <p className="font-bold text-primary">{t('rgpd.exercise.post.label')}</p>
+                                            <p className="text-sm text-muted-foreground whitespace-pre-line">
+                                                {t('rgpd.exercise.post.address')}
                                             </p>
                                         </div>
                                     </div>
                                 </div>
                                 <p className="text-sm text-muted-foreground mt-4">
-                                    <strong>Délai de réponse</strong> : Nous nous engageons à répondre à votre demande dans un délai d'un mois
-                                    à compter de sa réception. Ce délai peut être prolongé de deux mois en cas de complexité ou de nombre
-                                    important de demandes.
+                                    {t('rgpd.exercise.delay')}
                                 </p>
                                 <p className="text-sm text-muted-foreground mt-4">
-                                    <strong>Pièces justificatives</strong> : Pour des raisons de sécurité, nous pourrons vous demander de justifier
-                                    de votre identité en nous fournissant une copie d'un document d'identité.
+                                    {t('rgpd.exercise.id')}
                                 </p>
                             </div>
 
                             {/* Réclamation */}
                             <div className="bg-primary/5 p-6 rounded-xl">
-                                <h2 className="text-xl font-bold mb-3 text-primary font-['Outfit']">Droit de Réclamation auprès de la CNIL</h2>
+                                <h2 className="text-xl font-bold mb-3 text-primary font-['Outfit']">{t('rgpd.complaint.title')}</h2>
                                 <p className="text-muted-foreground leading-relaxed">
-                                    Si vous estimez que vos droits ne sont pas respectés, vous avez le droit d'introduire une réclamation
-                                    auprès de la Commission Nationale de l'Informatique et des Libertés (CNIL) :
+                                    {t('rgpd.complaint.desc')}
                                 </p>
                                 <div className="mt-4 space-y-2">
                                     <p className="text-sm font-bold text-primary">CNIL</p>
                                     <p className="text-sm text-muted-foreground">3 Place de Fontenoy - TSA 80715</p>
                                     <p className="text-sm text-muted-foreground">75334 PARIS CEDEX 07</p>
                                     <p className="text-sm text-muted-foreground">
-                                        Téléphone : 01 53 73 22 22
+                                        {t('rgpd.complaint.phone')} : 01 53 73 22 22
                                     </p>
                                     <p className="text-sm">
                                         <a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">
@@ -328,16 +309,16 @@ export const RGPD = () => {
                     {/* CTA Section */}
                     <div className="text-center space-y-4">
                         <Link
-                            to="/politique-confidentialite"
+                            to={getLocalizedPath("/politique-confidentialite")}
                             className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-full hover:bg-primary/90 transition-all shadow-lg hover:shadow-xl font-bold mr-4"
                         >
-                            Politique de Confidentialité
+                            {t('privacy.hero.title')}
                         </Link>
                         <Link
-                            to="/contact"
+                            to={getLocalizedPath("/contact")}
                             className="inline-flex items-center gap-2 px-8 py-4 bg-accent text-white rounded-full hover:bg-accent/90 transition-all shadow-lg hover:shadow-xl font-bold"
                         >
-                            Contactez-nous
+                            {t('privacy.cta')}
                         </Link>
                     </div>
                 </div>

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { usePageTitle } from "@/hooks/usePageTitle";
 import { SEO } from "@/components/common/SEO";
 import { AdBanner } from "@/components/common/AdBanner";
+import { useTranslation } from "react-i18next";
+import { getLocalizedPath } from "@/lib/i18nUtils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -30,7 +32,8 @@ import { motion } from "framer-motion";
 import api from "@/lib/api";
 
 export const QuoteRequest = () => {
-    usePageTitle("Demande de Devis");
+    const { t } = useTranslation();
+    usePageTitle(t('quote.title'));
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState({
@@ -55,7 +58,7 @@ export const QuoteRequest = () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         } catch (error) {
             console.error("Submission error:", error);
-            alert("Une erreur est survenue. Veuillez réessayer.");
+            alert(t('contact.form.error'));
         } finally {
             setIsLoading(false);
         }
@@ -80,15 +83,15 @@ export const QuoteRequest = () => {
                     <div className="inline-flex items-center justify-center p-6 bg-accent/20 rounded-full text-accent mb-4">
                         <CheckCircle2 className="h-16 w-16" />
                     </div>
-                    <h2 className="text-4xl font-bold font-['Outfit']">Merci !</h2>
+                    <h2 className="text-4xl font-bold font-['Outfit']">{t('quote.form.success.title')}</h2>
                     <p className="text-muted-foreground text-lg italic leading-relaxed">
-                        Votre demande de devis a été envoyée avec succès. Notre équipe vous contactera sous 24h pour discuter de votre beau projet.
+                        {t('quote.form.success.desc')}
                     </p>
                     <Button
-                        onClick={() => window.location.href = '/'}
+                        onClick={() => window.location.href = getLocalizedPath('/')}
                         className="rounded-xl px-10 h-14 text-lg shadow-premium"
                     >
-                        Retour à l'accueil
+                        {t('quote.form.success.button')}
                     </Button>
                 </motion.div>
             </div>
@@ -98,9 +101,9 @@ export const QuoteRequest = () => {
     return (
         <div className="flex flex-col">
             <SEO
-                title="Demande de Devis Gratuit - NettmobInfotech | Projet Web & Mobile"
-                description="Obtenez un devis gratuit et personnalisé pour votre projet web, mobile ou marketing digital. Réponse sous 24h. Expertise reconnue, prix transparent."
-                keywords="devis gratuit, estimation projet web, tarif site internet, prix application mobile, budget développement, Paris"
+                title={t('quote.title')}
+                description={t('quote.description')}
+                keywords={t('quote.keywords')}
             />
             {/* Header Section - Split Layout with Image */}
             <section className="relative py-16 lg:py-24 overflow-hidden bg-background text-foreground flex items-center border-b border-border/50">
@@ -132,7 +135,7 @@ export const QuoteRequest = () => {
                                 className="inline-flex items-center gap-2 px-4 py-2 bg-accent/10 rounded-full text-accent font-bold text-sm uppercase tracking-widest mb-6 border border-accent/20"
                             >
                                 <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-                                Propulser votre Vision
+                                {t('quote.hero.badge')}
                             </motion.div>
                             <motion.h1
                                 initial={{ opacity: 0, y: 20 }}
@@ -140,7 +143,7 @@ export const QuoteRequest = () => {
                                 transition={{ delay: 0.1 }}
                                 className="text-5xl lg:text-6xl font-bold font-['Outfit'] mb-6 leading-[1.1]"
                             >
-                                Parlons de votre <span className="text-accent underline decoration-accent/30 decoration-8 underline-offset-8">Projet</span>
+                                {t('quote.hero.title').split('<span class=\'text-accent\'>')[0]}<span className="text-accent underline decoration-accent/30 decoration-8 underline-offset-8">{t('quote.hero.title').split('<span class=\'text-accent\'>')[1].split('</span>')[0]}</span>
                             </motion.h1>
                             <motion.p
                                 initial={{ opacity: 0, y: 20 }}
@@ -148,7 +151,7 @@ export const QuoteRequest = () => {
                                 transition={{ delay: 0.2 }}
                                 className="text-lg lg:text-xl opacity-90 leading-relaxed font-medium text-muted-foreground/80 italic"
                             >
-                                "De l'idée à la réalité technologique. Obtenez une expertise sur-mesure et un chiffrage précis sous 24h."
+                                {t('quote.hero.desc')}
                             </motion.p>
                         </div>
                     </div>
@@ -166,61 +169,61 @@ export const QuoteRequest = () => {
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                         <div className="space-y-3">
                                             <Label className="text-base font-bold flex items-center gap-2 pr-2">
-                                                <User className="h-4 w-4 text-accent" /> Prénom
+                                                <User className="h-4 w-4 text-accent" /> {t('quote.form.firstName')}
                                             </Label>
                                             <Input
                                                 required
                                                 value={formData.firstName}
                                                 onChange={e => setFormData({ ...formData, firstName: e.target.value })}
-                                                placeholder="Votre prénom"
+                                                placeholder={t('contact.form.firstNamePlaceholder')}
                                                 className="h-14 rounded-2xl bg-accent/5 border-none focus-visible:ring-accent"
                                             />
                                         </div>
                                         <div className="space-y-3">
                                             <Label className="text-base font-bold flex items-center gap-2 pr-2">
-                                                <User className="h-4 w-4 text-accent" /> Nom
+                                                <User className="h-4 w-4 text-accent" /> {t('quote.form.lastName')}
                                             </Label>
                                             <Input
                                                 required
                                                 value={formData.lastName}
                                                 onChange={e => setFormData({ ...formData, lastName: e.target.value })}
-                                                placeholder="Votre nom"
+                                                placeholder={t('contact.form.lastNamePlaceholder')}
                                                 className="h-14 rounded-2xl bg-accent/5 border-none focus-visible:ring-accent"
                                             />
                                         </div>
                                         <div className="space-y-3">
                                             <Label className="text-base font-bold flex items-center gap-2 pr-2">
-                                                <Mail className="h-4 w-4 text-accent" /> Email Professionnel
+                                                <Mail className="h-4 w-4 text-accent" /> {t('quote.form.email')}
                                             </Label>
                                             <Input
                                                 required
                                                 type="email"
                                                 value={formData.email}
                                                 onChange={e => setFormData({ ...formData, email: e.target.value })}
-                                                placeholder="contact@votreentreprise.fr"
+                                                placeholder={t('contact.form.emailPlaceholder')}
                                                 className="h-14 rounded-2xl bg-accent/5 border-none focus-visible:ring-accent"
                                             />
                                         </div>
                                         <div className="space-y-3">
                                             <Label className="text-base font-bold flex items-center gap-2 pr-2">
-                                                <Phone className="h-4 w-4 text-accent" /> Téléphone
+                                                <Phone className="h-4 w-4 text-accent" /> {t('quote.form.phone')}
                                             </Label>
                                             <Input
                                                 type="tel"
                                                 value={formData.phone}
                                                 onChange={e => setFormData({ ...formData, phone: e.target.value })}
-                                                placeholder="+33 6 ..."
+                                                placeholder={t('contact.form.phonePlaceholder')}
                                                 className="h-14 rounded-2xl bg-accent/5 border-none focus-visible:ring-accent"
                                             />
                                         </div>
                                         <div className="md:col-span-2 space-y-3">
                                             <Label className="text-base font-bold flex items-center gap-2 pr-2">
-                                                <Building2 className="h-4 w-4 text-accent" /> Nom de la Société (Si applicable)
+                                                <Building2 className="h-4 w-4 text-accent" /> {t('quote.form.company')}
                                             </Label>
                                             <Input
                                                 value={formData.company}
                                                 onChange={e => setFormData({ ...formData, company: e.target.value })}
-                                                placeholder="Votre entreprise"
+                                                placeholder={t('quote.form.company')}
                                                 className="h-14 rounded-2xl bg-accent/5 border-none focus-visible:ring-accent"
                                             />
                                         </div>
@@ -229,7 +232,7 @@ export const QuoteRequest = () => {
                                     {/* Services Selection */}
                                     <div className="space-y-6">
                                         <Label className="text-xl font-bold font-['Outfit'] block text-primary border-l-4 border-accent pl-4">
-                                            Quels services vous intéressent ?
+                                            {t('quote.form.services')}
                                         </Label>
                                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-8 bg-accent/5 rounded-[2.5rem]">
                                             {servicesData.map((service) => (
@@ -244,7 +247,7 @@ export const QuoteRequest = () => {
                                                         htmlFor={service.slug}
                                                         className="text-sm font-medium leading-none cursor-pointer group-hover:text-accent transition-colors"
                                                     >
-                                                        {service.title}
+                                                        {t(service.title)}
                                                     </label>
                                                 </div>
                                             ))}
@@ -254,10 +257,10 @@ export const QuoteRequest = () => {
                                     {/* Project Details */}
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                         <div className="space-y-3">
-                                            <Label className="text-base font-bold">Votre Budget Estimé</Label>
+                                            <Label className="text-base font-bold">{t('quote.form.budget')}</Label>
                                             <Select value={formData.budget} onValueChange={val => setFormData({ ...formData, budget: val })}>
                                                 <SelectTrigger className="h-14 rounded-2xl bg-accent/5 border-none">
-                                                    <SelectValue placeholder="Choisir une fourchette" />
+                                                    <SelectValue placeholder={t('quote.form.budgetPlaceholder')} />
                                                 </SelectTrigger>
                                                 <SelectContent className="rounded-2xl border-none shadow-premium">
                                                     <SelectItem value="500-1500">500€ - 1500€</SelectItem>
@@ -269,10 +272,10 @@ export const QuoteRequest = () => {
                                             </Select>
                                         </div>
                                         <div className="space-y-3">
-                                            <Label className="text-base font-bold">Délai Souhaité</Label>
+                                            <Label className="text-base font-bold">{t('quote.form.timeline')}</Label>
                                             <Select value={formData.timeline} onValueChange={val => setFormData({ ...formData, timeline: val })}>
                                                 <SelectTrigger className="h-14 rounded-2xl bg-accent/5 border-none">
-                                                    <SelectValue placeholder="Quel est votre timing ?" />
+                                                    <SelectValue placeholder={t('quote.form.timelinePlaceholder')} />
                                                 </SelectTrigger>
                                                 <SelectContent className="rounded-2xl border-none shadow-premium">
                                                     <SelectItem value="urgent">Urgent (Moins d'un mois)</SelectItem>
@@ -287,12 +290,12 @@ export const QuoteRequest = () => {
                                     {/* Message */}
                                     <div className="space-y-3">
                                         <Label className="text-base font-bold flex items-center gap-2 pr-2">
-                                            <MessageSquare className="h-4 w-4 text-accent" /> Notes complémentaire (Optionnel)
+                                            <MessageSquare className="h-4 w-4 text-accent" /> {t('quote.form.notes')}
                                         </Label>
                                         <Textarea
                                             value={formData.details}
                                             onChange={e => setFormData({ ...formData, details: e.target.value })}
-                                            placeholder="Dites-nous en plus sur votre projet, vos objectifs..."
+                                            placeholder={t('quote.form.notesPlaceholder')}
                                             className="min-h-[200px] rounded-[2rem] bg-accent/5 border-none p-6 focus-visible:ring-accent text-lg"
                                         />
                                     </div>
@@ -307,12 +310,12 @@ export const QuoteRequest = () => {
                                                 <Loader2 className="h-6 w-6 animate-spin" />
                                             ) : (
                                                 <>
-                                                    Obtenir mon Devis Gratuit <Send className="ml-3 h-6 w-6 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                                                    {t('quote.form.submit')} <Send className="ml-3 h-6 w-6 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                                                 </>
                                             )}
                                         </Button>
                                         <p className="text-muted-foreground text-sm mt-6 flex items-center gap-2">
-                                            <CheckCircle2 className="h-4 w-4 text-accent" /> Nous travaillons au forfait : engagement sur résultat et prix ferme.
+                                            <CheckCircle2 className="h-4 w-4 text-accent" /> {t('quote.form.disclaimer')}
                                         </p>
                                     </div>
                                 </form>
@@ -329,7 +332,7 @@ export const QuoteRequest = () => {
             <section className="py-24 bg-accent/5">
                 <div className="container mx-auto px-4 text-center">
                     <p className="text-muted-foreground italic max-w-2xl mx-auto mb-8 font-medium">
-                        "Nous prendrons contact avec vous pour comprendre votre besoin et affiner cette estimation sous forme d'un devis détaillé."
+                        {t('quote.trust')}
                     </p>
                     <div className="h-1 w-24 bg-accent mx-auto rounded-full" />
                 </div>

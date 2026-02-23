@@ -1,6 +1,7 @@
 import { useAds } from "@/hooks/useAds";
 import type { Ad, AdFormat } from "@/hooks/useAds";
 import { ExternalLink } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface AdBannerProps {
     page: string;
@@ -31,8 +32,22 @@ const FORMAT_STYLES: Record<AdFormat, { wrapper: string; img: string; label: str
     },
 };
 
+// Helper: Get translated field safely
+function getTranslatedField(ad: Ad, field: 'title' | 'description' | 'buttonText', lang: string): string {
+    const key = `${field}_${lang}` as keyof Ad;
+    if (lang === 'fr') return ad[field] || "";
+    return (ad[key] as string) || ad[field] || "";
+}
+
 function SingleAd({ ad }: { ad: Ad }) {
+    const { i18n } = useTranslation();
+    const activeLang = i18n.language || 'fr';
     const style = FORMAT_STYLES[ad.format];
+
+    // Dynamic fields based on current language
+    const displayTitle = getTranslatedField(ad, 'title', activeLang);
+    const displayDesc = getTranslatedField(ad, 'description', activeLang);
+    const displayBtn = getTranslatedField(ad, 'buttonText', activeLang);
 
     if (ad.format === "rectangle") {
         return (
@@ -54,15 +69,15 @@ function SingleAd({ ad }: { ad: Ad }) {
                 )}
                 {/* Content */}
                 <div className="flex-1 flex flex-col justify-center px-4 min-w-0">
-                    <p className="font-black text-sm text-white truncate">{ad.title}</p>
-                    {ad.description && (
-                        <p className="text-[10px] text-white/60 truncate mt-0.5">{ad.description}</p>
+                    <p className="font-black text-sm text-white truncate">{displayTitle}</p>
+                    {displayDesc && (
+                        <p className="text-[10px] text-white/60 truncate mt-0.5">{displayDesc}</p>
                     )}
                 </div>
                 {/* CTA */}
                 <div className="flex items-center pr-3">
                     <span className="shrink-0 flex items-center gap-1 bg-gradient-to-r from-violet-600 to-blue-600 text-white text-[10px] font-bold px-3 py-1.5 rounded-xl hover:opacity-90 transition-opacity whitespace-nowrap">
-                        {ad.buttonText} <ExternalLink className="h-2.5 w-2.5" />
+                        {displayBtn} <ExternalLink className="h-2.5 w-2.5" />
                     </span>
                 </div>
             </a>
@@ -86,11 +101,11 @@ function SingleAd({ ad }: { ad: Ad }) {
                     </div>
                 )}
                 <div className="flex-1 flex items-center px-3 min-w-0">
-                    <p className="font-bold text-xs text-white truncate">{ad.title}</p>
+                    <p className="font-bold text-xs text-white truncate">{displayTitle}</p>
                 </div>
                 <div className="flex items-center pr-2">
                     <span className="shrink-0 flex items-center gap-1 bg-gradient-to-r from-violet-600 to-blue-600 text-white text-[9px] font-bold px-2 py-1 rounded-lg whitespace-nowrap">
-                        {ad.buttonText} <ExternalLink className="h-2 w-2" />
+                        {displayBtn} <ExternalLink className="h-2 w-2" />
                     </span>
                 </div>
             </a>
@@ -120,9 +135,9 @@ function SingleAd({ ad }: { ad: Ad }) {
             {/* Content */}
             <div className="flex flex-col flex-1 justify-between p-3">
                 <div>
-                    <p className="font-black text-sm text-white leading-tight line-clamp-2">{ad.title}</p>
-                    {ad.description && (
-                        <p className="text-[10px] text-white/60 mt-1 leading-relaxed line-clamp-3">{ad.description}</p>
+                    <p className="font-black text-sm text-white leading-tight line-clamp-2">{displayTitle}</p>
+                    {displayDesc && (
+                        <p className="text-[10px] text-white/60 mt-1 leading-relaxed line-clamp-3">{displayDesc}</p>
                     )}
                 </div>
                 <a
@@ -132,7 +147,7 @@ function SingleAd({ ad }: { ad: Ad }) {
                     onClick={(e) => e.stopPropagation()}
                     className="mt-2 flex items-center justify-center gap-1.5 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 text-white text-[10px] font-bold py-2 px-3 rounded-xl transition-all duration-300 shadow-lg shadow-violet-900/30"
                 >
-                    {ad.buttonText} <ExternalLink className="h-2.5 w-2.5" />
+                    {displayBtn} <ExternalLink className="h-2.5 w-2.5" />
                 </a>
             </div>
         </a>

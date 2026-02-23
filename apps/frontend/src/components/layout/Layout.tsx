@@ -23,7 +23,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
         <div className="min-h-screen flex flex-col bg-background text-foreground transition-colors duration-300">
             <TopBar isScrolled={isScrolled} />
             <Navbar isScrolled={isScrolled} />
-            <main className="flex-1">
+            <main className="flex-1 pt-8 md:pt-12">
                 {children}
             </main>
             <Footer />

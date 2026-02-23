@@ -7,6 +7,12 @@ export interface BlogPost {
     title: string;
     slug: string;
     content: string;
+    title_en?: string;
+    content_en?: string;
+    title_es?: string;
+    content_es?: string;
+    title_de?: string;
+    content_de?: string;
     imageUrl: string;
     category: string;
     author: string;
@@ -53,8 +59,8 @@ export class BlogRepo {
     public async create(p: BlogPost): Promise<number> {
         const slug = p.slug || this.slugify(p.title);
         const result = await this.db.query(
-            "INSERT INTO blog (title, slug, content, imageUrl, category, author) VALUES (?, ?, ?, ?, ?, ?)",
-            [p.title, slug, p.content, p.imageUrl, p.category, p.author || "L'équipe NettmobInfotech"]
+            "INSERT INTO blog (title, slug, content, title_en, content_en, title_es, content_es, title_de, content_de, imageUrl, category, author) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            [p.title, slug, p.content, p.title_en || null, p.content_en || null, p.title_es || null, p.content_es || null, p.title_de || null, p.content_de || null, p.imageUrl, p.category, p.author || "L'équipe NettmobInfotech"]
         );
         return result.insertId;
     }
@@ -70,7 +76,13 @@ export class BlogRepo {
             }
         }
         if (p.slug) { sets.push("slug = ?"); params.push(p.slug); }
-        if (p.content) { sets.push("content = ?"); params.push(p.content); }
+        if (p.content !== undefined) { sets.push("content = ?"); params.push(p.content); }
+        if (p.title_en !== undefined) { sets.push("title_en = ?"); params.push(p.title_en); }
+        if (p.content_en !== undefined) { sets.push("content_en = ?"); params.push(p.content_en); }
+        if (p.title_es !== undefined) { sets.push("title_es = ?"); params.push(p.title_es); }
+        if (p.content_es !== undefined) { sets.push("content_es = ?"); params.push(p.content_es); }
+        if (p.title_de !== undefined) { sets.push("title_de = ?"); params.push(p.title_de); }
+        if (p.content_de !== undefined) { sets.push("content_de = ?"); params.push(p.content_de); }
         if (p.imageUrl) { sets.push("imageUrl = ?"); params.push(p.imageUrl); }
         if (p.category) { sets.push("category = ?"); params.push(p.category); }
         if (p.author) { sets.push("author = ?"); params.push(p.author); }
@@ -102,6 +114,12 @@ export class BlogRepo {
                 title VARCHAR(255) NOT NULL,
                 slug VARCHAR(255) UNIQUE NOT NULL,
                 content LONGTEXT NOT NULL,
+                title_en VARCHAR(255),
+                content_en LONGTEXT,
+                title_es VARCHAR(255),
+                content_es LONGTEXT,
+                title_de VARCHAR(255),
+                content_de LONGTEXT,
                 imageUrl LONGTEXT,
                 category VARCHAR(100) NOT NULL,
                 author VARCHAR(100) DEFAULT "L'équipe NettmobInfotech",

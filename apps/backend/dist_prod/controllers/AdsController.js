@@ -52,7 +52,7 @@ let AdsController = class AdsController {
     // Admin: create ad
     async createAd(req, res) {
         try {
-            const { title, description, imageUrl, buttonText, buttonUrl, format, pages, isActive } = req.body;
+            const { title, description, imageUrl, buttonText, buttonUrl, format, pages, isActive, title_en, description_en, buttonText_en, title_es, description_es, buttonText_es, title_de, description_de, buttonText_de } = req.body;
             if (!title || !format) {
                 return res.status(400).json({ message: "title and format are required" });
             }
@@ -64,7 +64,16 @@ let AdsController = class AdsController {
                 buttonUrl: buttonUrl || "",
                 format,
                 pages: pages || [],
-                isActive: isActive !== false
+                isActive: isActive !== false,
+                title_en: title_en || "",
+                description_en: description_en || "",
+                buttonText_en: buttonText_en || "",
+                title_es: title_es || "",
+                description_es: description_es || "",
+                buttonText_es: buttonText_es || "",
+                title_de: title_de || "",
+                description_de: description_de || "",
+                buttonText_de: buttonText_de || ""
             });
             const ad = await this.adsRepo.findById(id);
             return res.status(201).json(ad);
